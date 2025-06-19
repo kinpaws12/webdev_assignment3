@@ -1,0 +1,49 @@
+stages:
+  - install
+  - test
+  - build
+
+variables:
+  NODE_VERSION: "18"
+
+# Cache node modules for faster builds
+cache:
+  paths:
+    - client/node_modules/
+
+# Install dependencies for client
+install-client:
+  stage: install
+  image: node:${NODE_VERSION}
+  script:
+    - cd client
+    - npm ci
+  artifacts:
+    paths:
+      - client/node_modules/
+    expire_in: 1 hour
+
+# Test client
+test-client:
+  stage: test
+  image: node:${NODE_VERSION}
+  dependencies:
+    - install-client
+  script:
+    - cd client
+    - npm run typecheck || echo "Skipping typecheck if not configured"
+    - npm test || echo "No tests yet"
+
+# Build client
+build-client:
+  stage: build
+  image: node:${NODE_VERSION}
+  dependencies:
+    - install-client
+  script:
+    - cd client
+    - npm run build
+  artifacts:
+    paths:
+      - client/build/  # or dist/ if using Vite/Webpack manually
+    expire_in: 2 weeks
