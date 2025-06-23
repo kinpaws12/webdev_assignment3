@@ -10,36 +10,36 @@ cache:
   paths:
     - node_modules/
 
-before_script:
-  - echo "Running CI on branch: $CI_COMMIT_BRANCH"
-
 install:
   stage: install
-  image: node:${NODE_VERSION}
+  image: node:18
   script:
+    - echo "Installing dependencies on branch ${CI_COMMIT_BRANCH}"
     - npm ci
   artifacts:
     paths:
       - node_modules/
-    expire_in: 3 hour
+    expire_in: 3 hrs
 
 test:
   stage: test
-  image: node:${NODE_VERSION}
+  image: node:18
   dependencies:
     - install
   script:
+    - echo "Running tests"
     - npm run typecheck || echo "No typecheck configured"
     - npm test || echo "No tests configured"
 
 build:
   stage: build
-  image: node:${NODE_VERSION}
+  image: node:18
   dependencies:
     - install
   script:
+    - echo "Building project"
     - npm run build
   artifacts:
     paths:
       - dist/
-    expire_in: 2 week
+    expire_in: 2 weeks
