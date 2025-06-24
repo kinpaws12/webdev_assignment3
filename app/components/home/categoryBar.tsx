@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import { useState } from 'react';
 
-const categories = ["All", "Today", "This Weekend", "Music", "Technology", "Art"];
+const categories = ["Music", "Workshop", "Technology", "Art", "Nightlife", "Business"];
 
 export const CategoryBar = () => {
   const [active, setActive] = useState("All");
