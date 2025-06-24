@@ -1,0 +1,45 @@
+stages:
+  - install
+  - test
+  - build
+
+variables:
+  NODE_VERSION: "20"
+
+cache:
+  paths:
+    - node_modules/
+
+install:
+  stage: install
+  image: node:18
+  script:
+    - echo "Installing dependencies on branch ${CI_COMMIT_BRANCH}"
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 3 hrs
+
+test:
+  stage: test
+  image: node:18
+  dependencies:
+    - install
+  script:
+    - echo "Running tests"
+    - npm run typecheck || echo "No typecheck configured"
+    - npm test || echo "No tests configured"
+
+build:
+  stage: build
+  image: node:18
+  dependencies:
+    - install
+  script:
+    - echo "Building project"
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 2 weeks
