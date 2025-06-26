@@ -1,9 +1,9 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Form from 'react-bootstrap/Form';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 interface MyComponentProps {}
 
@@ -46,6 +46,7 @@ export default function GlobalNavigationBar(props: MyComponentProps) {
               />
             </div>
           </div>
+          <Nav.Link as={Link} to="/login">Login</Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>

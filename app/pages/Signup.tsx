@@ -1,13 +1,10 @@
 import React from 'react';
+import AuthForm from '~/features/auth/components/authForm';
 
-interface SignupPageProps {
-  
-}
-
-function SignupPage(props: SignupPageProps) {
+function SignupPage() {
   return (
     <div>
-      {/* Component content goes here */}
+      <AuthForm mode = "signup"/>
     </div>
   );
 }

@@ -1,13 +1,10 @@
 import React from 'react';
+import AuthForm from '~/features/auth/components/authForm';
 
-interface LoginPageProps {
-  
-}
-
-function LoginPage(props: LoginPageProps) {
+function LoginPage() {
   return (
     <div>
-      {/* Component content goes here */}
+      <AuthForm mode = "login"/>
     </div>
   );
 }

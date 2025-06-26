@@ -8,6 +8,8 @@ import type { Route } from "./+types/root";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./app.css";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -52,5 +54,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <Provider store={store}>
+      <Outlet />
+      <ToastContainer position="top-right" autoClose={3000}/>
+    </Provider>
+  )
 }

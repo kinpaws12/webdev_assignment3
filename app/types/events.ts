@@ -1,5 +1,3 @@
-
-
 export interface EventProperties {
     id: number
     title: string;
