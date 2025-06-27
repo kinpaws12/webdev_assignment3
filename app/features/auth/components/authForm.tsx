@@ -41,7 +41,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
     values: LoginValues,
     { setSubmitting }: FormikHelpers<LoginValues>
   ) => {
-    await dispatch(loginUser(values));
+    const {user} = await dispatch(loginUser(values));
+    toast.success(
+      `Loginin successful! Welcome ${user.name}`, 
+      { autoClose: 2000 }
+    );
+    setTimeout(() => navigate('/account'), 2500);
     setSubmitting(false);
   };
 
@@ -49,7 +54,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
     return (
       <Formik<SignupValues>
         initialValues={{
-          fullName: '',
+          name: '',
           email: '',
           phone: '',
           password: '',
@@ -63,14 +68,14 @@ export default function AuthForm({ mode }: AuthFormProps) {
           <Form noValidate>
             {/* Full name */}
             <Box mb={2}>
-              <Field name="fullName">
+              <Field name="name">
                 {({ field }: any) => (
                   <TextField
                     {...field}
                     fullWidth
-                    label="Full Name"
-                    error={touched.fullName && Boolean(errors.fullName)}
-                    helperText={<ErrorMessage name="fullName" />}
+                    label="name"
+                    error={touched.name && Boolean(errors.name)}
+                    helperText={<ErrorMessage name="name" />}
                   />
                 )}
               </Field>
@@ -215,11 +220,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
           {/* Password */}
           <Box mb={2}>
-            <Field name="password" type="password">
+            <Field name="password">
               {({ field }: any) => (
                 <TextField
                   {...field}
                   fullWidth
+                  type="password"
                   label="Password"
                   error={touched.password && Boolean(errors.password)}
                   helperText={<ErrorMessage name="password" />}

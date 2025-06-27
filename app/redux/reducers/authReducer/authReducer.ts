@@ -8,6 +8,7 @@ const initialState: AuthState = {
 
     currentUsers: null,
     jwtToken: null,
+    isAuthenticated: false,
 
     loading: false,
     error: null
@@ -61,6 +62,7 @@ export default function authReducer(
                 ...state,
                 currentUsers: action.payload.user,
                 jwtToken: action.payload.token,
+                isAuthenticated: true,
 
                 pendingLogin: undefined,
                 loading: false,

@@ -4,10 +4,11 @@ export default [
 //layout1: Global theme layout for most pages
   layout("./components/globalTheme/globalShell.tsx", [
     index("./pages/Home.tsx"),
+    route("account", "./pages/Account.tsx"),
     //other routes share the global layout
 
     layout("./components/dashboard/Dashboard.tsx", [
-        route("account", "./pages/Account.tsx"),
+        // route("account", "./pages/Account.tsx"),
         // route("eventmanagement", "./pages/EventManagement.tsx"),
         // other routes share the Dashboard shell
     ])

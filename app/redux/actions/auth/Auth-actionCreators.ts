@@ -1,7 +1,7 @@
 import type { Dispatch } from "redux";
 import { AuthActionTypes } from "./Auth-actionTypes";
 import { toast } from 'react-toastify';
-import type { SignupValues, LoginValues, User } from "~/features/auth/types/auth_types";
+import type { SignupValues, LoginValues, User, LoginSuccessPayload } from "~/features/auth/types/auth_types";
 import * as authApi from '~/features/auth/services/authApi'
 import type { ThunkAction } from 'redux-thunk';
 import type { AppState } from "~/redux/store";
@@ -42,11 +42,13 @@ export const signupUser = (
         type: AuthActionTypes.SIGNUP_SUCCESS,
         payload: { user: data.user, token: data.token },
       });
+      return data;
     } catch (err: any) {
       dispatch({
         type: AuthActionTypes.SIGNUP_FAILURE,
         payload: { error: err.message || 'Signup failed' },
       });
+      throw err;
     }
   };
 };
@@ -70,20 +72,29 @@ interface LoginFailureAction {
 
 export const loginUser = (
   formData: LoginValues
-): ThunkAction<Promise<void>, AppState, unknown, AuthActions> => {
+): ThunkAction<Promise<LoginSuccessPayload>, AppState, unknown, AuthActions> => {
   return async (dispatch) => {
-    dispatch({ type: AuthActionTypes.LOGIN_REQUEST, payload: {formData} });
+    dispatch({ 
+      type: AuthActionTypes.LOGIN_REQUEST, 
+      payload: {formData} 
+    });
     try {
       const data = await authApi.login(formData);
+      localStorage.setItem('token', data.token);
       dispatch({
         type: AuthActionTypes.LOGIN_SUCCESS,
-        payload: { user: data.user, token: data.token },
+        payload: { 
+          user: data.user, 
+          token: data.token
+        },
       });
+      return data;
     } catch (err: any) {
       dispatch({
         type: AuthActionTypes.LOGIN_FAILURE,
         payload: { error: err.message || 'Login failed' },
       });
+      throw err;
     }
   };
 };

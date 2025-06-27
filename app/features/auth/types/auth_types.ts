@@ -1,5 +1,5 @@
 export interface SignupValues {
-  fullName: string;
+  name: string;
   email: string;
   phone?: string;
   password: string;
@@ -12,6 +12,11 @@ export interface LoginValues {
   password: string;
   rememberMe?: boolean;
 };
+
+export interface LoginSuccessPayload {
+  user:  User;
+  token: string;
+}
 
 export interface User {
   id: number;

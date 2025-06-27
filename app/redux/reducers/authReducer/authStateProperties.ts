@@ -6,6 +6,7 @@ export default interface AuthState {
 
     currentUsers: User | null;
     jwtToken: string | null;
+    isAuthenticated: boolean;
     
     loading: boolean;
     error: string | null;

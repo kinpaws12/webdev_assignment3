@@ -2,8 +2,10 @@ import * as Yup from 'yup';
 
  //User authentication
  export const SignupSchema = Yup.object({
-    fullName: Yup.string()
+    name: Yup.string()
         .min(1, 'Is your name really just 1 letter?')
+        .trim()
+        .nullable()
         .required('Your name is Required!'),
     email: Yup.string()
         .email('Invalid email')

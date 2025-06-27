@@ -14,12 +14,13 @@ export async function signup(formData: SignupValues) {
 }
 
 export async function login(formData: LoginValues) {
-  const res = await fetch(`${env.VITE_API_BASE_URL}${env.VITE_API_PREFIX}/auth/login`, {
+  const res = await fetch(`${env.VITE_API_BASE_URL}${env.VITE_API_PREFIX}/auth/sign-in`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
   });
   if (!res.ok) 
     throw new Error(`Login failed (${res.status})`);
+  
   return res.json();
 }

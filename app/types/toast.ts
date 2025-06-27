@@ -1,5 +1,5 @@
 export default interface Toast {
-  id: string;          // for queues
+  id: string;
   variant: 'success' | 'error' | 'info' | 'warning';
   text: string;
 }
