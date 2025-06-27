@@ -8,17 +8,18 @@ variables:
 
 cache:
   paths:
-    - node_modules/
+    - frontend/node_modules/
 
 install:
   stage: install
   image: node:18
   script:
     - echo "Installing dependencies on branch ${CI_COMMIT_BRANCH}"
+    - cd frontend
     - npm ci
   artifacts:
     paths:
-      - node_modules/
+      - frontend/node_modules/
     expire_in: 3 hrs
 
 test:
@@ -28,6 +29,7 @@ test:
     - install
   script:
     - echo "Running tests"
+    - cd frontend
     - npm run typecheck || echo "No typecheck configured"
     - npm test || echo "No tests configured"
 
@@ -38,8 +40,9 @@ build:
     - install
   script:
     - echo "Building project"
+    - cd frontend
     - npm run build
   artifacts:
     paths:
-      - dist/
+      - frontend/dist/
     expire_in: 2 weeks
