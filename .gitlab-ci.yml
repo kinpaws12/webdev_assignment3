@@ -12,11 +12,12 @@ cache:
 
 install:
   stage: install
-  image: node:18
+  image: node:20
   script:
     - echo "Installing dependencies on branch ${CI_COMMIT_BRANCH}"
     - cd frontend
-    - npm ci
+    - rm -rf node_modules package-lock.json 
+    - npm install
   artifacts:
     paths:
       - frontend/node_modules/
@@ -24,7 +25,7 @@ install:
 
 test:
   stage: test
-  image: node:18
+  image: node:20
   dependencies:
     - install
   script:
@@ -35,7 +36,7 @@ test:
 
 build:
   stage: build
-  image: node:18
+  image: node:20
   dependencies:
     - install
   script:
