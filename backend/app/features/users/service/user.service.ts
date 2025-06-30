@@ -1,7 +1,7 @@
-import { User } from "../../users/types/user.type";
-import { UserModel } from "../../users/models/user.model";
+import { User } from "../types/user.type";
+import { UserModel } from "../models/user.model";
 import { env } from "../../../config/env";
-import { UserUpdateInput } from "../../users/types/user.type";
+import { UserUpdateInput } from "../types/user.type";
 
 const SAFE_PROJECTION = '-password -__v';
 

@@ -9,18 +9,23 @@ variables:
 cache:
   paths:
     - frontend/node_modules/
+    - backend/node_modules/
 
 install:
   stage: install
   image: node:20
   script:
-    - echo "Installing dependencies on branch ${CI_COMMIT_BRANCH}"
+    - echo "📦 Installing dependencies for frontend and backend on branch ${CI_COMMIT_BRANCH}"
     - cd frontend
-    - rm -rf node_modules package-lock.json 
+    - rm -rf node_modules package-lock.json
+    - npm install
+    - cd ../backend
+    - rm -rf node_modules package-lock.json
     - npm install
   artifacts:
     paths:
       - frontend/node_modules/
+      - backend/node_modules/
     expire_in: 3 hrs
 
 test:
@@ -29,10 +34,13 @@ test:
   dependencies:
     - install
   script:
-    - echo "Running tests"
+    - echo "🧪 Running frontend tests and backend checks"
     - cd frontend
-    - npm run typecheck || echo "No typecheck configured"
-    - npm test || echo "No tests configured"
+    - npm run typecheck || echo "No frontend typecheck configured"
+    - npm test || echo "No frontend tests configured"
+    - cd ../backend
+    - npm run typecheck || echo "No backend typecheck configured"
+    - npm test || echo "No backend tests configured"
 
 build:
   stage: build
@@ -40,10 +48,13 @@ build:
   dependencies:
     - install
   script:
-    - echo "Building project"
+    - echo "🏗️ Building frontend and backend"
     - cd frontend
+    - npm run build
+    - cd ../backend
     - npm run build
   artifacts:
     paths:
       - frontend/dist/
+      - backend/build/
     expire_in: 2 weeks
