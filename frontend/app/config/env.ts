@@ -1,17 +1,28 @@
-export const env = {
-    // API Configuration
-    apiBaseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5174',
-    apiPrefix: import.meta.env.VITE_API_PREFIX || '/api',
+import * as z from "zod/v4";
 
-    // Feature Flags
-    enableMockData: import.meta.env.VITE_ENABLE_MOCK_DATA === 'true',
+const clientEnvSchema = z.object({
+    VITE_API_BASE_URL: z.url(),
+    VITE_API_PREFIX: z.string().default('/api'),
 
-    // App Configuration
-    appName: import.meta.env.VITE_APP_NAME ?? 'Event Flow',
-    appVersion: import.meta.env.VITE_APP_VERSION ?? '1.0.0',
+    VITE_ENABLE_MOCK_DATA: z
+        .enum(['true', 'false'])
+        .transform(v => v === 'true'),
 
-    // Build Configuration
-    nodeEnv: import.meta.env.MODE,
-    isDevelopment: import.meta.env.MODE === 'development',
-    isProduction: import.meta.env.MODE === 'production',
-} as const;
+    VITE_APP_NAME:    z.string(),
+    VITE_APP_VERSION: z.string(),
+
+    MODE: z.enum([
+        'development', 
+        'production', 
+        'test', 
+        'staging'
+    ]).default('development'),
+    DEV: z.coerce.boolean(),
+    PROD: z.coerce.boolean(),
+})
+
+export const env = clientEnvSchema.parse(import.meta.env);
+console.log(import.meta.env)
+
+export const isDev  = env.DEV;
+export const isProd = env.PROD;

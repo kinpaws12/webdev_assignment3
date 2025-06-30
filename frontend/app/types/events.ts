@@ -1,5 +1,3 @@
-
-
 export interface EventProperties {
     id: number
     title: string;
@@ -18,3 +16,11 @@ export interface EventProperties {
 export type UpdatedEventFields = {
     id?: number;
 } & Partial<Omit<EventProperties, 'id'>>;
+
+export interface EventCardProps {
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  image: string;
+}

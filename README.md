@@ -1,15 +1,16 @@
-# Event_Flow
+## Node environment
+Node version: 20.19.2
+```bash
+$ nvm use
+```
+Make sure to set your project's node version as required.
 
-A modern, eventbrite-like event booking and networking web app.
-
-## Getting Started
-
-### Installation
+## Installation
 
 Install the dependencies:
 
 ```bash
-npm install
+$ npm install
 ```
 
 ### Node.js version
@@ -34,13 +35,22 @@ The routing strategy used in this project is react-router Framework mode:
 
 ```
 ├── app/
+├── features/
 |   ├── components/    # All page related components
-|   ├── pages/         # All app page
-|   ├── types/         # All const types go here
-|   ├── redux/         # Global state management
+|   ├── services/         # All app page
+|   ├── theme/         # All const types go here
+|   ├── types/         # Global state management
 │   └── utils/         # helper functions can be saved here
-|   ... other folders
-
+├── pages/  
+├── redux/             # Global state management
+|   ├── actions/       # Action creators categorized by feature
+|       ├── auth/      
+|       ├── other feature action folders/
+|   ├── middleware/     
+|   ├── reducers/       # All feature reducers go here
+|       ├── authReducer/
+|   ├── hooks.ts         # 
+│   └── store.ts         # 
 ├── root.tsx           # The entry point of the whole app.
 ├── rootes.ts          # The route map for all pages, including layout and pages.
 ```

@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import type { EventCardProps } from '../types';
+import type { EventCardProps } from '~/types/events';
 
 export const EventCard = ({ title, date, time, location, image }: EventCardProps) => {
   return (
