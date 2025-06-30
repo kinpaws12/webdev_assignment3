@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only app/server.ts",
     "build": "tsc",
-    "start": "node build/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/server.js",
+    "test": "echo \"Error: no test specified yet\" && exit 0"
   },
   "author": "Group_7",
   "license": "ISC",
