@@ -1,3 +1,8 @@
+## Before you go
+locate the .env.sample in both frontend and backend
+create a .env for both frontend and backend at their root level
+copy and paste everything from .env.sample to your .env and save 
+
 ## Installation
 ```bash
 $ npm run dev:install
