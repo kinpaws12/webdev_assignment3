@@ -15,13 +15,10 @@ install:
   stage: install
   image: node:20
   script:
-    - echo "📦 Installing dependencies for frontend and backend on branch ${CI_COMMIT_BRANCH}"
-    - cd frontend
-    - rm -rf node_modules package-lock.json
+    - echo "📦 Installing root, frontend, and backend dependencies"
     - npm install
-    - cd ../backend
-    - rm -rf node_modules package-lock.json
-    - npm install
+    - cd frontend && rm -rf node_modules package-lock.json && npm install
+    - cd ../backend && rm -rf node_modules package-lock.json && npm install
   artifacts:
     paths:
       - frontend/node_modules/
@@ -34,7 +31,7 @@ test:
   dependencies:
     - install
   script:
-    - echo "🧪 Running frontend tests and backend checks"
+    - echo "🧪 Running frontend and backend typecheck/tests"
     - cd frontend
     - npm run typecheck || echo "No frontend typecheck configured"
     - npm test || echo "No frontend tests configured"
@@ -48,10 +45,7 @@ build:
   dependencies:
     - install
   script:
-    - echo "🏗️ Building frontend and backend"
-    - cd frontend
-    - npm run build
-    - cd ../backend
+    - echo "🏗️ Building both frontend and backend using root script"
     - npm run build
   artifacts:
     paths:
