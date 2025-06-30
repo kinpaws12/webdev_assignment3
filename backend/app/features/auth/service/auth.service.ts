@@ -1,7 +1,7 @@
 import { env } from "../../../config/env";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { LeanUser, User } from "../../users/types/user.type";
+import { LeanUser } from "../../users/types/user.type";
 import { UserModel } from "../../users/models/user.model";
 
 export class AuthService {
@@ -18,7 +18,6 @@ export class AuthService {
         if (data.name?.trim() === '') delete (data as any).name;
         
         const user = await UserModel.create({ ...data, password: hash });
-
         const { _id, name, email, role } = user.toObject() as LeanUser;
 
         return { 

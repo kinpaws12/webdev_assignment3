@@ -12,8 +12,8 @@ export default function Header() {
   const dispatch = useAppDispatch();
   const isUserLoggedIn = useAppSelector(state => state.auth.isAuthenticated);
 
+  // Reset user state to null
   const handleLogout = () => {
-    //Reset user state to null
     dispatch(logoutUser());
     navigate('/');
   }
