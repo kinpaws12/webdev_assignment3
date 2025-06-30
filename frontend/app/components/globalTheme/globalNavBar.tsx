@@ -1,12 +1,22 @@
-
 import { useState } from "react";
 import { FaSearch, FaMapMarkerAlt, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "~/redux/actions/auth/Auth-actionCreators";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+  const isUserLoggedIn = useAppSelector(state => state.auth.isAuthenticated);
+
+  const handleLogout = () => {
+    //Reset user state to null
+    dispatch(logoutUser());
+    navigate('/');
+  }
 
   {/* TO DO */}
   const handleSearch = () => {
@@ -16,10 +26,10 @@ export default function Header() {
   };
 
   const mockLocations = ["Nova Scotia", "Toronto", "New York", "Vancouver"];
-const [locationIndex, setLocationIndex] = useState(0);
+  const [locationIndex, setLocationIndex] = useState(0);
 
-const handleLocationClick = () => {
-  setLocationIndex((prevIndex) => (prevIndex + 1) % mockLocations.length);
+  const handleLocationClick = () => {
+    setLocationIndex((prevIndex) => (prevIndex + 1) % mockLocations.length);
 };
 
 
@@ -49,13 +59,13 @@ const handleLocationClick = () => {
         <div className="hidden sm:block w-px h-5 bg-gray-300" />
 
         {/* Interactive Location */}
-<button
-  className="hidden sm:flex items-center text-sm text-gray-700 hover:text-pink-600 transition whitespace-nowrap"
-  onClick={handleLocationClick}
->
-  <FaMapMarkerAlt className="text-pink-500 mr-1" />
-  <span className="whitespace-nowrap">{mockLocations[locationIndex]}</span>
-</button>
+        <button
+          className="hidden sm:flex items-center text-sm text-gray-700 hover:text-pink-600 transition whitespace-nowrap"
+          onClick={handleLocationClick}
+        >
+          <FaMapMarkerAlt className="text-pink-500 mr-1" />
+          <span className="whitespace-nowrap">{mockLocations[locationIndex]}</span>
+        </button>
 
 
         {/* Search Button */}
@@ -83,12 +93,20 @@ const handleLocationClick = () => {
         <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
           Help Center ▾
         </button>
-        <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
-          Log In
-        </button>
-        <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
-          Sign Up
-        </button>
+
+        {isUserLoggedIn ? 
+          <button 
+            onClick={handleLogout}
+            className="hover:bg-gray-100 px-2 py-1 rounded transition">
+            Logout
+          </button>
+          : 
+          <button 
+            onClick={() => navigate('/login')}
+            className="hover:bg-gray-100 px-2 py-1 rounded transition">
+            Login
+          </button>
+        }
       </nav>
     </header>
   );

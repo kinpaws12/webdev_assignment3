@@ -11,7 +11,7 @@ export default [
   ]),
 
   
-  layout("./components/auth/AuthLayout.tsx", [
+  layout("./features/auth/theme/AuthLayout.tsx", [
     route("login", "./pages/Login.tsx"),
     route("signup", "./pages/Signup.tsx"),
   ]),
