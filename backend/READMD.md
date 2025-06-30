@@ -11,8 +11,6 @@ mongosh "mongodb://127.0.0.1:27017/event-booking"
 To generate an unique JWT secret:
 
 ```
-openssl rand -hex 32
-or
 openssl rand -base64 48
 ```
 
