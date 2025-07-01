@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "../service/auth.service";
-
+import { signupSchema, signinSchema } from "../../../zodSchema";
 
 // POST / – signup a account
 export async function signup(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await AuthService.register(req.body);
+    const validateReqBody = signupSchema.parse(req.body);
+    const user = await AuthService.register(validateReqBody);
     res.status(201).json(user);
   } catch (err) { next(err); }
 }
@@ -13,7 +14,7 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
 // POST / – signin account
 export async function signIn(req: Request, res: Response, next: NextFunction) {
   try {
-    const {email, password} = req.body;
+    const {email, password} = signinSchema.parse(req.body);
     const { user, token } = await AuthService.login(email, password);
     res.json({user, token})
   } catch (err) { next(err); }

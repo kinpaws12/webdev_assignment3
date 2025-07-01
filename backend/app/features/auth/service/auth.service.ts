@@ -10,14 +10,16 @@ export class AuthService {
         name: string;
         email: string;
         password: string;
+        phone?: string;
+        receiveUpdates?: boolean;
         role?: "USER" | "ORGANIZER";
     }
 ) {
-        const hash = await bcrypt.hash(data.password, 12);
+        const hashPassword = await bcrypt.hash(data.password, 12);
 
         if (data.name?.trim() === '') delete (data as any).name;
         
-        const user = await UserModel.create({ ...data, password: hash });
+        const user = await UserModel.create({ ...data, password: hashPassword });
         const { _id, name, email, role } = user.toObject() as LeanUser;
 
         return { 
