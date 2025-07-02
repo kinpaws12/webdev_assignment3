@@ -14,3 +14,5 @@ export const signinSchema = z.object({
     password: z.string(),
     rememberMe: z.boolean()
 })
+
+//Events

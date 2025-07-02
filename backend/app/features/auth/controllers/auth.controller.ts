@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { AuthService } from "../service/auth.service";
 import { signupSchema, signinSchema } from "../../../zodSchema";
 
@@ -15,8 +15,28 @@ export async function signup(req: Request, res: Response, next: NextFunction) {
 export async function signIn(req: Request, res: Response, next: NextFunction) {
   try {
     const {email, password} = signinSchema.parse(req.body);
-    const { user, token } = await AuthService.login(email, password);
-    res.json({user, token})
+    const { user, token, refreshToken } = await AuthService.login({ email, password });
+    
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.json({ user, token });
+  } catch (err) { next(err); }
+}
+
+// POST / - get new access token
+export const refreshToken: RequestHandler = async (req, res, next) => {
+  try {
+    const rt = req.cookies?.refresh_token;
+    if (!rt) {
+      res.status(401).json({ message: "Missing refresh token" });
+      return;
+    }
+    const newAccessToken = await AuthService.rotateAccessToken(rt);
+    res.json({ token: newAccessToken });
   } catch (err) { next(err); }
 }
 
