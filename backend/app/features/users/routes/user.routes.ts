@@ -1,14 +1,14 @@
 import { Router } from "express";
 import * as userController from "../controllers/user.controller";
 import { allowSelfOrAdmin } from "../middleware/user.idChecks";
-import { routeProtector } from "../../../global_middleware/route.protect";
+import { authenticator } from "../../../global_middleware/route.protect";
 import { authorize } from "../../../global_middleware/authorize";
 
 const userRouter = Router();
 const adminRouter = Router();
 
-userRouter.use(routeProtector);
-adminRouter.use(routeProtector);
+userRouter.use(authenticator);
+adminRouter.use(authenticator);
 
 // user & organizer or Admin
 userRouter.route('/:id')

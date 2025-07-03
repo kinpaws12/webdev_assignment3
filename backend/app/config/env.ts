@@ -10,6 +10,7 @@ const envSchema = z.object({
 });
 
 export const env = envSchema.parse(process.env);
+
 export type Env = typeof env;
 export type MongoUri = Env["MONGO_URI"];
 

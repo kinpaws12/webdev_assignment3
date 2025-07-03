@@ -47,6 +47,7 @@ export class AuthService {
         if (!ok) throw new Error("Invalid credentials");
 
         const { _id, name, email: userEmail, role } = user;
+
         const accessToken = this.signToken(user); 
         const refreshToken = this.refreshToken(user);
 
@@ -77,7 +78,7 @@ export class AuthService {
         if (!env.JWT_REFRESH_SECRET) throw new Error("Refresh token is missing!");
         const payload = { sub: user._id, role: user.role, type: "refresh-jwt" };
         const refresh_token = jwt.sign(payload, env.JWT_REFRESH_SECRET, {
-            expiresIn: "1d",
+            expiresIn: "7d",
             issuer: "event-flow-server",
                 audience: `event-flow-client-${user.name}`
         });
