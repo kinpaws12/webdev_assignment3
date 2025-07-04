@@ -1,6 +1,6 @@
-import type { EventProperties } from '~/types/events';
+import type { EventProperties } from '~/features/eventDetails/types/events';
 import * as actionTypes from './actionTypes';
-import type { UpdatedEventFields } from '~/types/events';
+import type { UpdatedEventFields } from '~/features/eventDetails/types/events';
 
 //get all events
 export const fetchEvents = () => ({

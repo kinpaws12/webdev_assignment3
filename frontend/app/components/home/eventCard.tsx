@@ -1,8 +1,19 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 import type { EventCardProps } from '~/types/events';
 
-export const EventCard = ({ title, date, time, location, image }: EventCardProps) => {
+export const EventCard = ({ id, title, date, time, location, image, onClick }: EventCardProps) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    if (onClick) {
+      onClick(id);
+    } else {
+      navigate(`/events/${id}`);
+    }
+  };
+
   return (
     <Card
       className="mb-4 border-0 shadow-sm"
@@ -32,6 +43,7 @@ export const EventCard = ({ title, date, time, location, image }: EventCardProps
           variant="outline-dark"
           className="w-100 rounded-pill fw-semibold"
           style={{ borderWidth: 1.5 }}
+          onClick={handleViewDetails}
         >
           View Details
         </Button>

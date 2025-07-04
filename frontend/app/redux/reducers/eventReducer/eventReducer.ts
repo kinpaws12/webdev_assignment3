@@ -1,4 +1,4 @@
-import type { EventProperties } from "../../../types/events";
+import type { EventProperties } from "../../../features/eventDetails/types/events";
 import * as actionTypes from "../../actions/events/actionTypes";
 
 interface EventState {
