@@ -72,7 +72,12 @@ export default function EventDetails() {
             description={event.description}
           />
           <EventMap />
-          <BookButton />
+          <BookButton eventInfo={{
+            title: event.title,
+            date: event.date,
+            time: event.time,
+            location: event.location
+          }} />
         </div>
 
         {/* Right (Chat Box or future components) */}
