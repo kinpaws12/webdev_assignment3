@@ -9,8 +9,10 @@ import cookieParser from "cookie-parser";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./swagger";
 
+
 dotenv.config();
 const app = express();
+
 
 app.use(
   cors({
@@ -34,7 +36,7 @@ app.use("/api", apiRouter);
       console.log(`⚡  Server ready  →  http://localhost:${env.PORT}`);
     });
   } catch (err) {
-    console.error("❌  Startup failed:", err);
+    console.error(" Startup failed:", err);
     process.exit(1);
   }
 })();
