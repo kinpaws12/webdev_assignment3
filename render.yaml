@@ -3,7 +3,7 @@ services:
     name: backend-service
     runtime: node
     rootDir: backend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm ls && npm run build
     startCommand: npm run start
     envVars:
       - key: NODE_VERSION
@@ -17,7 +17,7 @@ services:
     name: frontend-service
     runtime: node
     rootDir: frontend
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm ls && npm run build
     startCommand: npm run preview
     envVars:
       - key: NODE_VERSION
