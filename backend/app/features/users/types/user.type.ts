@@ -19,9 +19,20 @@ export interface AuthticatedUser {
   refreshToken: string
 }
 
+export interface SignupUser {
+  name: string;
+  email: string;
+  password: string;
+  phone?: string;
+  role?: 'USER' | 'ORGANIZER';
+  receiveUpdates?: boolean;
+}
+export type SigninUser = Pick<User, 'email' | 'password'>;
+
 export type LeanUser = User & { _id: Types.ObjectId };
 
-export type SigninUser = Pick<User, 'email' | 'password'>;
+export type Role = AuthticatedUser['user']['role'];
+export type VerifyRole = Role;
 
 export type UserUpdateInput = Pick<User, 'name' | 'email'>;
 

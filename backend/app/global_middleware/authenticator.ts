@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
 
-export const authenticator: RequestHandler = (req, res, next) => {
+export const authenticate: RequestHandler = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     res.status(401).json({ message: "No token found" });

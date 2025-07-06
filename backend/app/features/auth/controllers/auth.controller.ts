@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { AuthService } from "../service/auth.service";
 import { signupSchema, signinSchema } from "../../../zodSchema";
 import { env } from "../../../config/env";
+import { SignupUser } from "../../users/types/user.type";
 
 // POST / – signup a account
 export async function signup(req: Request, res: Response, next: NextFunction) {
@@ -24,7 +25,7 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ user, token });
+    res.status(200).json({ user, token });
   } catch (err) { next(err); }
 }
 

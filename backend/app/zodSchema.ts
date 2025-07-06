@@ -6,6 +6,7 @@ export const signupSchema = z.object({
     email: z.string(),
     password: z.string(),
     phone: z.string(),
+    role: z.enum(['USER', 'ORGANIZER']),
     receiveUpdates: z.boolean()
 })
 
