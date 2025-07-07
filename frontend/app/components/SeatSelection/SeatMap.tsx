@@ -1,69 +1,98 @@
-import React, { useState } from "react";
-import Seat from "./Seat";
+// 
 
-const initialSeats = [
-  ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10"],
-  ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10"],
-  ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10"],
-  ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10"],
-  ["E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "E10"],
+import { useState } from 'react';
+
+const rows = [
+  { label: 'A', count: 10 },
+  { label: 'B', count: 12 },
+  { label: 'C', count: 14 },
+  { label: 'D', count: 16 },
+  { label: 'E', count: 18 },
+  { label: 'F', count: 20 }, // VIP
+  { label: 'G', count: 22 }, // VIP
 ];
 
-// Hardcoded status for example
-const booked = ["C5", "C6", "D3", "D6"];
-const vip = ["A1", "A10", "E1", "E10"];
+const bookedSeats = ['B11', 'C4', 'D7', 'F4', 'F9', 'G2', 'G3'];
+
+const seatStatusColors = {
+  available: 'bg-orange-200',
+  selected: 'bg-orange-400 text-white',
+  vip: 'bg-orange-600 text-white',
+  booked: 'bg-slate-400 text-white',
+};
 
 export default function SeatMap() {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
 
-  const toggleSeat = (seat: string) => {
-    if (booked.includes(seat)) return;
-
-    setSelected(prev =>
-      prev.includes(seat)
-        ? prev.filter(s => s !== seat)
-        : [...prev, seat]
+  const toggleSeat = (seatId: string, isVIP: boolean) => {
+    if (bookedSeats.includes(seatId)) return;
+    setSelectedSeats(prev =>
+      prev.includes(seatId)
+        ? prev.filter(s => s !== seatId)
+        : [...prev, seatId]
     );
   };
 
-  const getStatus = (seat: string) => {
-    if (booked.includes(seat)) return "booked";
-    if (selected.includes(seat)) return "selected";
-    if (vip.includes(seat)) return "vip";
-    return "available";
-  };
-
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">Select Your Seat</h2>
+    <div className="text-center space-y-6">
+      <h2 className="text-3xl font-bold">Select Your Seat</h2>
+
+      {/* Stage Shape */}
+      <div className="flex justify-center mt-2">
+        <div className="w-64 h-20 bg-gray-200 rounded-t-[60%] shadow-inner flex items-end justify-center">
+          <span className="text-lg font-semibold pb-2">STAGE</span>
+        </div>
+      </div>
+
+      {/* Seat Map */}
+      <div className="flex flex-col items-center space-y-4 pt-4">
+        {rows.map((row, rowIndex) => {
+          const curve = (rowIndex - rows.length / 2) * 3; // Arch curvature
+          return (
+            <div
+              key={row.label}
+              className="flex gap-2 justify-center"
+              style={{
+                transform: `rotate(${curve}deg) translateY(${Math.abs(curve)}px) rotate(${-curve}deg)`,
+              }}
+            >
+              {Array.from({ length: row.count }, (_, i) => {
+                const seatId = `${row.label}${i + 1}`;
+                const isVIP = row.label === 'F' || row.label === 'G';
+                const isBooked = bookedSeats.includes(seatId);
+                const isSelected = selectedSeats.includes(seatId);
+
+                const bgColor = isBooked
+                  ? seatStatusColors.booked
+                  : isSelected
+                  ? seatStatusColors.selected
+                  : isVIP
+                  ? seatStatusColors.vip
+                  : seatStatusColors.available;
+
+                return (
+                  <button
+                    key={seatId}
+                    onClick={() => toggleSeat(seatId, isVIP)}
+                    className={`w-10 h-10 rounded shadow-md ${bgColor} hover:scale-105 transition-transform`}
+                    disabled={isBooked}
+                  >
+                    {seatId}
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
 
       {/* Legend */}
-      <div className="flex gap-4 text-sm">
-        <div className="flex items-center gap-1"><div className="w-4 h-4 bg-green-500 rounded-sm" />Available</div>
-        <div className="flex items-center gap-1"><div className="w-4 h-4 bg-yellow-500 rounded-sm" />VIP</div>
-        <div className="flex items-center gap-1"><div className="w-4 h-4 bg-red-500 rounded-sm" />Booked</div>
-        <div className="flex items-center gap-1"><div className="w-4 h-4 bg-blue-500 rounded-sm" />Selected</div>
+      <div className="flex justify-center gap-6 text-sm pt-6">
+        <div><span className={`inline-block w-4 h-4 rounded mr-1 ${seatStatusColors.available}`}></span>Available</div>
+        <div><span className={`inline-block w-4 h-4 rounded mr-1 ${seatStatusColors.selected}`}></span>Selected</div>
+        <div><span className={`inline-block w-4 h-4 rounded mr-1 ${seatStatusColors.vip}`}></span>VIP</div>
+        <div><span className={`inline-block w-4 h-4 rounded mr-1 ${seatStatusColors.booked}`}></span>Booked</div>
       </div>
-
-      {/* Seat Grid */}
-      <div className="grid gap-2">
-        {initialSeats.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex justify-center gap-2">
-            {row.map(seat => (
-              <Seat
-                key={seat}
-                label={seat}
-                status={getStatus(seat)}
-                onClick={() => toggleSeat(seat)}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Summary */}
-      <p className="mt-4">Total Selected: {selected.length}</p>
-      <button className="bg-orange-500 hover:bg-orange-600 px-4 py-2 text-white rounded-md mt-2">Confirm Booking</button>
     </div>
   );
 }
