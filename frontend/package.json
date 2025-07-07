@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
     "dev": "react-router dev",
-    "start": "npm run build && react-router-serve ./build/server/index.js",
+    "build": "react-router build",
+    "start": "react-router serve",
     "typecheck": "react-router typegen && tsc",
     "postinstall": "flowbite-react patch"
   },
@@ -38,6 +38,7 @@
     "react-router-dom": "^7.6.2",
     "react-toastify": "^11.0.5",
     "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.3.1",
@@ -45,7 +46,7 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.6.2",
+    "@react-router/dev": "^7.6.3",
     "@tailwindcss/vite": "^4.1.4",
     "@types/node": "^20",
     "@types/react": "^19.1.8",
