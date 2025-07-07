@@ -8,7 +8,10 @@ export function authorize(...roles: VerifyRole[]): RequestHandler {
       return;
     }
     if (!roles.includes(req.user.role as VerifyRole)) {
-      res.status(403).json({ message: 'Forbidden' });
+      res.status(403).json(
+        { message: `Forbidden: you cannot request resources 
+          beyond the level of your access: [${req.user.role}]` 
+      });
       return;
     }
     next();

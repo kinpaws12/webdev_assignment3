@@ -13,7 +13,7 @@ publicEventRouter.get("/categories/:categoryName", eventController.getEventsByCa
 publicEventRouter.get("/:id", eventController.getEventById);
 
 // Organizer
-const organizerEventRouter = Router(); // organizer‑only routes
+const organizerEventRouter = Router();
 organizerEventRouter.use(authenticate, authorize(...ORGANIZER_ROLE));
 
 organizerEventRouter
@@ -23,7 +23,7 @@ organizerEventRouter.route("/:id")
   .delete(eventController.deleteEventById);
 
 // Admin
-const adminEventRouter = Router(); // admin‑only routes
+const adminEventRouter = Router();
 adminEventRouter.use(authenticate, authorize(...ADMIN_ROLE));
 
 adminEventRouter.patch("/:id/audit", eventController.auditEvent);

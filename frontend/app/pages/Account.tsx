@@ -3,7 +3,7 @@ import { Card, CardContent, Typography } from '@mui/material';
 import { useAppSelector } from '~/redux/hooks';
 
 function AccountPage() {
-  const user = useAppSelector(state => state.auth.currentUsers);
+  const user = useAppSelector(state => state.auth.currentUser);
 
   if (!user) {
     return <Typography variant="h6">You are not signed in.</Typography>;

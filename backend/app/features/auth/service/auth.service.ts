@@ -1,19 +1,13 @@
 import { env } from "../../../config/env";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { AuthticatedUser, LeanUser, SigninUser } from "../../users/types/user.type";
+import { AuthticatedUser, LeanUser, SigninUser, SignupUser } from "../../users/types/user.type";
 import { UserModel } from "../../users/models/user.model";
+import { RevokedTokenModel } from "../models/revokedToken.model";
 
 export class AuthService {
     // signup
-    static async register(data: {
-        name: string;
-        email: string;
-        password: string;
-        phone?: string;
-        receiveUpdates?: boolean;
-        role?: "USER" | "ORGANIZER";
-    }) 
+    static async register(data: SignupUser) 
     {
         const hashPassword = await bcrypt.hash(data.password, 12);
 
@@ -58,6 +52,27 @@ export class AuthService {
         };
     }
 
+    static async logout(refreshToken: string): Promise<void> {
+      if (!refreshToken || !env.JWT_REFRESH_SECRET) return;
+
+      try {
+        const { exp } = jwt.verify(
+          refreshToken,
+          env.JWT_REFRESH_SECRET
+        ) as jwt.JwtPayload;
+
+        const expiryDate = exp ? new Date(exp * 1000) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        const res = await RevokedTokenModel.updateOne(
+          { token: refreshToken },
+          { token: refreshToken, expiresAt: expiryDate },
+          { upsert: true }
+        );
+        console.log('logout → revoked update result', res); 
+      } catch(err) {
+        console.error('logout error', err);
+      }
+    }
+
     // reset password
     static async resetPassword(email: string) {
         
@@ -95,6 +110,12 @@ export class AuthService {
             payload = jwt.verify(refreshToken, env.JWT_REFRESH_SECRET) as jwt.JwtPayload;
         } catch {
             throw new Error("Invalid or expired refresh token");
+        }
+
+        // Check blacklist
+        const revoked = await RevokedTokenModel.exists({ token: refreshToken });
+        if (revoked) {
+          throw new Error("Refresh token has been revoked");
         }
 
         if (payload.type !== "refresh-jwt") {

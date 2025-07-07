@@ -2,7 +2,6 @@ import { Request, Response, NextFunction, RequestHandler } from "express";
 import { AuthService } from "../service/auth.service";
 import { signupSchema, signinSchema } from "../../../zodSchema";
 import { env } from "../../../config/env";
-import { SignupUser } from "../../users/types/user.type";
 
 // POST / – signup a account
 export async function signup(req: Request, res: Response, next: NextFunction) {
@@ -32,15 +31,37 @@ export async function signIn(req: Request, res: Response, next: NextFunction) {
 // POST / - get new access token
 export const refreshToken: RequestHandler = async (req, res, next) => {
   try {
-    const rt = req.cookies?.refresh_token;
-    if (!rt) {
+    const refresh_token = req.cookies?.refresh_token;
+    console.log("refresh token is: ", refresh_token);
+    // Test-only: remove this later on...
+    console.log("⇢ refresh-token endpoint hit → cookie:", refresh_token?.slice(0, 30) ?? "NONE");
+
+    if (!refresh_token) {
       res.status(401).json({ message: "Missing refresh token" });
       return;
     }
-    const newAccessToken = await AuthService.rotateAccessToken(rt);
+    const newAccessToken = await AuthService.rotateAccessToken(refresh_token);
     res.json({ token: newAccessToken });
   } catch (err) { next(err); }
 }
+
+// POST /auth/logout – invalidate refresh token and clear cookie
+export const logout: RequestHandler = async (req, res, next) => {
+  try {
+    const refresh_token = req.cookies?.refresh_token;
+    if (refresh_token) {
+      await AuthService.logout(refresh_token);
+    }
+    res.clearCookie("refresh_token", {
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
 
 // POST / – reset password
 export async function resetPassword(req: Request, res: Response, next: NextFunction) {
