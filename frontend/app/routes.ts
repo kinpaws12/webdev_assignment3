@@ -5,6 +5,7 @@ export default [
   layout("./components/globalTheme/globalShell.tsx", [
     index("./pages/Home.tsx"),
     route("search", "./pages/Search.tsx"),
+    route("help-center", "./pages/HelpCenter.tsx"),
     layout("./components/dashboard/Dashboard.tsx", [
       route("account", "./pages/Account.tsx"),
     ]),
