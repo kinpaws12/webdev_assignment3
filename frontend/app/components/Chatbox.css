@@ -62,11 +62,11 @@
   }
 }
 
-/* Chat Header - 橙色渐变 */
+/* Chat Header - 减小橙色区域 */
 .chatbox-header {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
-  padding: 16px;
+  padding: 12px 16px; /* 从16px减少到12px */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,8 +81,8 @@
 }
 
 .status-indicator {
-  width: 8px;
-  height: 8px;
+  width: 6px; /* 从8px减少到6px */
+  height: 6px;
   background: #10b981;
   border-radius: 50%;
   animation: pulse 2s infinite;
@@ -247,7 +247,7 @@
 .send-button {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 12px; /* 改为圆角矩形 */
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   border: none;
   color: white;

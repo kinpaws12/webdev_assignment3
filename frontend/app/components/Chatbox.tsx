@@ -171,10 +171,10 @@ const Chatbox: React.FC = () => {
       {/* Chat Window */}
       <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 w-80 h-96 flex flex-col overflow-hidden animate-slideUp">
         {/* Chat Header */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 flex items-center justify-between">
+        <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="font-semibold">Event Flow Support</span>
+            <div className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="font-semibold text-sm">Event Flow Support</span>
           </div>
           <button 
             onClick={toggleChat} 
@@ -234,7 +234,7 @@ const Chatbox: React.FC = () => {
             />
             <button 
               onClick={handleSendMessage}
-              className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-full transition-colors"
+              className="bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-xl transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <line x1="22" y1="2" x2="11" y2="13"></line>
