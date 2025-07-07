@@ -6,10 +6,10 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 const createNoopStorage = () => ({
   getItem(_key: string) {
-    return Promise.resolve(null);          // nothing to hydrate
+    return Promise.resolve(null);   
   },
   setItem(_key: string, value: unknown) {
-    return Promise.resolve(value);         // ignore writes
+    return Promise.resolve(value); 
   },
   removeItem(_key: string) {
     return Promise.resolve();
@@ -18,7 +18,7 @@ const createNoopStorage = () => ({
 
 const storage =
   typeof window !== "undefined"
-    ? createWebStorage("local")            // real localStorage on the browser
+    ? createWebStorage("local")
     : createNoopStorage();
 
 const authPersistConfig = {
