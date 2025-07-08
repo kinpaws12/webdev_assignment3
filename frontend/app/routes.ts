@@ -5,9 +5,13 @@ export default [
   layout("./components/globalTheme/globalShell.tsx", [
     index("./pages/Home.tsx"),
     route("search", "./pages/Search.tsx"),
+<<<<<<< HEAD
     route("help-center", "./pages/HelpCenter.tsx"),
+=======
+    route("account", "./pages/Account.tsx"),
+>>>>>>> origin/develop
     layout("./components/dashboard/Dashboard.tsx", [
-      route("account", "./pages/Account.tsx"),
+      // route("account", "./pages/Account.tsx"),
     ]),
   ]),
 
