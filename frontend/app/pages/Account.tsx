@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, Typography, Container } from '@mui/material';
+import Grid from '@mui/material/GridLegacy';
 import { useAppSelector } from '~/redux/hooks';
 
 function AccountPage() {
@@ -10,17 +11,27 @@ function AccountPage() {
   }
 
   return (
-    <Card sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
-      <CardContent>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Card sx={{ p: 4, borderRadius: 2 }}>
         <Typography variant="h5" gutterBottom>
-          Hello&nbsp;<strong>{user.name}</strong>
+          My Account
         </Typography>
-
-        <Typography variant="h5" gutterBottom>
-          Your email is: &nbsp;<strong>{user.email}</strong>
-        </Typography>
-      </CardContent>
-    </Card>
+        <Grid container spacing={4}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" color="textSecondary">
+              Name
+            </Typography>
+            <Typography variant="h6">{user.name}</Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="subtitle2" color="textSecondary">
+              Email
+            </Typography>
+            <Typography variant="h6">{user.email}</Typography>
+          </Grid>
+        </Grid>
+      </Card>
+    </Container>
   );
 }
 
