@@ -4,21 +4,6 @@ import Chatbox from '../Chatbox';
 import { Outlet } from 'react-router';
 import NavBar from './toolBar';
 
-<<<<<<< HEAD
-interface GlobalShellProps {
-
-}
-
-export default function GlobalShell(props: GlobalShellProps) {
-  return (
-    <>
-      <GlobalNavigationBar />
-      <main className="flex-grow-1">
-        <Outlet />
-      </main>
-      <GlobalFooter />
-      <Chatbox />
-=======
 export default function GlobalShell() {
   return (
     <>
@@ -28,7 +13,7 @@ export default function GlobalShell() {
           <Outlet/>
         </main>
       <GlobalFooter/>
->>>>>>> origin/develop
+      <Chatbox />
     </>
   );
 }
