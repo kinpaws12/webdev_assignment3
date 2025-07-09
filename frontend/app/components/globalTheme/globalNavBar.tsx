@@ -114,9 +114,13 @@ const GlobalNavBar = () => {
           <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
             Events
           </button>
-          <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
-            Help Center ▾
-          </button>
+          <Link
+            to="/help-center"
+            className="hover:bg-gray-100 px-2 py-1 rounded transition text-black focus:outline-none"
+            style={{ fontWeight: 400, textDecoration: 'none !important' }}
+          >
+            Help Center
+          </Link>
 
           {isUserLoggedIn ? (
             <button 
