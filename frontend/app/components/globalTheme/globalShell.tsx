@@ -1,5 +1,6 @@
 import GlobalNavigationBar from './globalNavBar';
 import GlobalFooter from './globalFooter';
+import Chatbox from '../Chatbox';
 import { Outlet } from 'react-router';
 import NavBar from './toolBar';
 
@@ -12,6 +13,7 @@ export default function GlobalShell() {
           <Outlet/>
         </main>
       <GlobalFooter/>
+      <Chatbox />
     </>
   );
 }
