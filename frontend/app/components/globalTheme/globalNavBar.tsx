@@ -116,11 +116,11 @@ const GlobalNavBar = () => {
               Logout
             </button>
           ) : (
-            <button 
-              onClick={() => navigate('/login')}
-              className="hover:bg-gray-100 px-2 py-1 rounded transition">
-              Login
-            </button>
+              <button 
+                onClick={() => navigate('/login')}
+                className="hover:bg-gray-100 px-2 py-1 rounded transition">
+                Login
+              </button>
           )}
         </nav>
       </header>

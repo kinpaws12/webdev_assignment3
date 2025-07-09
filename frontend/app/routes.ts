@@ -7,6 +7,7 @@ export default [
     route("help-center", "./pages/HelpCenter.tsx"),
     route("seat-selection", "./pages/SeatSelectionPage.tsx"),
     route("account", "./pages/Account.tsx"),
+    route("events/:id", "./pages/EventDetails.tsx"),
     // layout("./components/dashboard/Dashboard.tsx", [
          // route("account", "./pages/Account.tsx"),
     // ]),
@@ -16,6 +17,6 @@ export default [
     route("login", "./pages/Login.tsx"),
     route("signup", "./pages/Signup.tsx"),
   ]),
-  route("events/:id", "./pages/EventDetails.tsx"),
+  
   
 ] satisfies RouteConfig;
