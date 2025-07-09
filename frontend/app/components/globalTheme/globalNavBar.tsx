@@ -1,29 +1,17 @@
 import React, { useState } from "react";
 import { FaSearch, FaMapMarkerAlt, FaBars } from "react-icons/fa";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "~/redux/actions/auth/Auth-actionCreators";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks";
-
-
-interface EventType {
-  _id?: string;
-  id?: string;
-  icon?: string;
-  title: string;
-  location: string;
-  description: string;
-  // add other fields as needed
-}
+import type { EventCardProps } from '~/types/events';
 
 const GlobalNavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState<EventType[]>([]);
-  const [events, setEvents] = useState<EventType[]>([]);
+  const [searchResults, setSearchResults] = useState<EventCardProps[]>([]);
+  const [events, setEvents] = useState<EventCardProps[]>([]);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/signup";
 
   const isUserLoggedIn = useAppSelector(state => state.auth.isAuthenticated);
 
@@ -68,7 +56,6 @@ const GlobalNavBar = () => {
           <div className="flex items-center bg-gray-200 rounded-full px-3 py-1 shadow-sm gap-2 flex-grow mx-2 max-w-[60%] sm:max-w-xl">
             {/* Search Icon & Input */}
             <div className="flex items-center flex-grow">
-              {/* <FaSearch className="text-gray-500 mr-1 sm:mr-2 text-sm sm:text-base" /> */}
               <input
                 type="text"
                 className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-full text-sm"
@@ -129,13 +116,11 @@ const GlobalNavBar = () => {
               Logout
             </button>
           ) : (
-            !isAuthPage && (
-              <button 
-                onClick={() => navigate('/login')}
-                className="hover:bg-gray-100 px-2 py-1 rounded transition">
-                Login
-              </button>
-            )
+            <button 
+              onClick={() => navigate('/login')}
+              className="hover:bg-gray-100 px-2 py-1 rounded transition">
+              Login
+            </button>
           )}
         </nav>
       </header>
