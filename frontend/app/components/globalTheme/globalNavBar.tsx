@@ -18,7 +18,7 @@ export default function Header() {
     navigate('/');
   }
 
-  {/* TO DO */}
+  {/* TO DO */ }
   const handleSearch = () => {
     if (searchTerm.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
@@ -30,7 +30,7 @@ export default function Header() {
 
   const handleLocationClick = () => {
     setLocationIndex((prevIndex) => (prevIndex + 1) % mockLocations.length);
-};
+  };
 
 
   return (
@@ -86,22 +86,23 @@ export default function Header() {
 
       {/* Right: Desktop Nav */}
       <nav
-        className={`${
-          menuOpen ? "flex" : "hidden"
-        } sm:flex items-center space-x-3 text-sm text-black ml-4 w-full sm:w-auto`}
+        className={`${menuOpen ? "flex" : "hidden"
+          } sm:flex items-center space-x-3 text-sm text-black ml-4 w-full sm:w-auto`}
       >
-        <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
-          Help Center ▾
+        <button
+          onClick={() => navigate('/help-center')}
+          className="hover:bg-gray-100 px-2 py-1 rounded transition">
+          Help Center
         </button>
 
-        {isUserLoggedIn ? 
-          <button 
+        {isUserLoggedIn ?
+          <button
             onClick={handleLogout}
             className="hover:bg-gray-100 px-2 py-1 rounded transition">
             Logout
           </button>
-          : 
-          <button 
+          :
+          <button
             onClick={() => navigate('/login')}
             className="hover:bg-gray-100 px-2 py-1 rounded transition">
             Login
