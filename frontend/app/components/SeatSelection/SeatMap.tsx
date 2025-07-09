@@ -1,5 +1,7 @@
 
+
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const rows = [
   { label: 'A', count: 10 },
@@ -22,6 +24,7 @@ const seatStatusColors = {
 
 export default function SeatMap() {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const toggleSeat = (seatId: string, isVIP: boolean) => {
     if (bookedSeats.includes(seatId)) return;
@@ -38,6 +41,8 @@ export default function SeatMap() {
     const isVIP = rowLabel === 'F' || rowLabel === 'G';
     return sum + getSeatPrice(isVIP);
   }, 0);
+
+
 
   return (
     <div className="text-center space-y-6 px-2 sm:px-4">
