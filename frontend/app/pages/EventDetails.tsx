@@ -45,8 +45,8 @@ const mockEvents = [
 
 export default function EventDetails() {
   const { id } = useParams<{ id: string }>();
-  const eventId = parseInt(id || '1');
-  const event = mockEvents.find(e => e.id === eventId) || mockEvents[0];
+  const decodedTitle = decodeURIComponent(id || '');
+  const event = mockEvents.find(e => e.title === decodedTitle) || mockEvents[0];
 
   return (
     <div className="max-w-screen-lg mx-auto">

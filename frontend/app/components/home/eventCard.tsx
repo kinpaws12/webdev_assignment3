@@ -3,14 +3,14 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import type { EventCardProps } from '~/types/events';
 
-export const EventCard = ({ id, title, date, time, location, image, onClick }: EventCardProps) => {
+export const EventCard = ({ title, date, time, location, image, onClick }: Omit<EventCardProps, 'id'>) => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
     if (onClick) {
-      onClick(id);
+      onClick(title);
     } else {
-      navigate(`/events/${id}`);
+      navigate(`/events/${encodeURIComponent(title)}`);
     }
   };
 

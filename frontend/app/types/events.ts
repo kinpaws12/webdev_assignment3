@@ -18,11 +18,10 @@ export type UpdatedEventFields = {
 } & Partial<Omit<EventProperties, 'id'>>;
 
 export interface EventCardProps {
-  id: number;
   title: string;
   date: string;
   time: string;
   location: string;
   image: string;
-  onClick?: (id: number) => void;
+  onClick?: (title: string) => void;
 } 

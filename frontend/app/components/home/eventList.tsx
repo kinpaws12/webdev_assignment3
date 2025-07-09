@@ -47,12 +47,12 @@ export const EventList = () => {
         {mockEvents.map((event) => (
           <EventCard
             key={event.id}
-            id={event.id}
             title={event.title}
             date={event.date}
             time={event.time}
             location={event.location}
             image={event.image}
+            // onClick={...} // if you use onClick, pass title as argument
           />
         ))}
       </div>

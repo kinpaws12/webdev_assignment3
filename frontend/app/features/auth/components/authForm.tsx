@@ -196,7 +196,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               onMouseOver={e => (e.currentTarget.style.background = '#c94a1c')}
               onMouseOut={e => (e.currentTarget.style.background = '#f15a29')}
             >
-              Create Account
+              Sign Up
             </Button>
 
             <Divider>
