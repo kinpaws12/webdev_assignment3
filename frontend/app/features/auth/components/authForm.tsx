@@ -191,8 +191,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
               variant="contained"
               disabled={isSubmitting}
               sx={{ mb: 2 }}
+              className="signup-btn"
+              style={{ background: '#f15a29', color: 'white' }}
+              onMouseOver={e => (e.currentTarget.style.background = '#c94a1c')}
+              onMouseOut={e => (e.currentTarget.style.background = '#f15a29')}
             >
-              Sign up
+              Sign Up
             </Button>
 
             <Divider>
@@ -282,8 +286,12 @@ export default function AuthForm({ mode }: AuthFormProps) {
             variant="contained"
             disabled={isSubmitting}
             sx={{ mb: 2 }}
+            className="signup-btn"
+            style={{ background: '#f15a29', color: 'white' }}
+            onMouseOver={e => (e.currentTarget.style.background = '#c94a1c')}
+            onMouseOut={e => (e.currentTarget.style.background = '#f15a29')}
           >
-            Sign in
+            Sign In
           </Button>
 
           {/* Forgot & switch to signup */}

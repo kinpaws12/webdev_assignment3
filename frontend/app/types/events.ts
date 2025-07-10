@@ -23,4 +23,5 @@ export interface EventCardProps {
   time: string;
   location: string;
   image: string;
-}
+  onClick?: (title: string) => void;
+} 

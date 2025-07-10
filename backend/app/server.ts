@@ -34,7 +34,7 @@ app.use("/api", apiRouter);
       console.log(`⚡  Server ready  →  http://localhost:${env.PORT}`);
     });
   } catch (err) {
-    console.error("❌  Startup failed:", err);
+    console.error(" Startup failed:", err);
     process.exit(1);
   }
 })();

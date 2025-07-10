@@ -1,15 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { FaSearch, FaMapMarkerAlt, FaBars } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "~/redux/actions/auth/Auth-actionCreators";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks";
+import type { EventCardProps } from '~/types/events';
 
-export default function Header() {
+const GlobalNavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState<EventCardProps[]>([]);
+  const [events, setEvents] = useState<EventCardProps[]>([]);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
   const isUserLoggedIn = useAppSelector(state => state.auth.isAuthenticated);
 
   // Reset user state to null
@@ -18,10 +21,14 @@ export default function Header() {
     navigate('/');
   }
 
-  {/* TO DO */ }
-  const handleSearch = () => {
-    if (searchTerm.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+  const handleSearch = async () => {
+    if (!searchTerm.trim()) return;
+    try {
+      const res = await fetch(`/api/events/search?q=${encodeURIComponent(searchTerm)}`);
+      const data = await res.json();
+      setSearchResults(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setSearchResults([]);
     }
   };
 
@@ -32,89 +39,94 @@ export default function Header() {
     setLocationIndex((prevIndex) => (prevIndex + 1) % mockLocations.length);
   };
 
-
   return (
-    <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-2 shadow-sm bg-white">
-      {/* Left: Logo */}
-      <div className="text-orange-500 font-bold text-xl sm:text-2xl whitespace-nowrap mr-2">
-        eventflow
-      </div>
+    <>
+      <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-2 shadow-sm bg-white">
+        {/* Left: Logo */}
+        <Link
+          to="/"
+          className="flex items-center flex-shrink-0 no-underline focus:outline-none"
+          style={{ textDecoration: 'none' }}
+        >
+          <span className="text-[#f05537] font-bold text-2xl">eventflow</span>
+        </Link>
 
-      {/* Center: Search Box */}
-      <div className="flex items-center bg-gray-200 rounded-full px-3 py-1 shadow-sm gap-2 flex-grow mx-2 max-w-[60%] sm:max-w-xl">
-        {/* Search Icon & Input */}
-        <div className="flex items-center flex-grow">
-          <FaSearch className="text-gray-500 mr-1 sm:mr-2 text-sm sm:text-base" />
-          <input
-            type="text"
-            placeholder="Search events"
-            className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-full text-sm"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
+        {/* Center: Search Box */}
+        <div className="flex-1 flex justify-center">
+          <div className="flex items-center bg-gray-200 rounded-full px-3 py-1 shadow-sm gap-2 flex-grow mx-2 max-w-[60%] sm:max-w-xl">
+            {/* Search Icon & Input */}
+            <div className="flex items-center flex-grow">
+              <input
+                type="text"
+                className="bg-transparent outline-none text-gray-700 placeholder-gray-500 w-full text-sm"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                placeholder="Search events"
+              />
+            </div>
+            {/* Divider */}
+            <div className="hidden sm:block w-px h-5 bg-gray-300" />
+            {/* Interactive Location */}
+            <button
+              className="hidden sm:flex items-center text-sm text-gray-700 hover:text-pink-600 transition whitespace-nowrap"
+              onClick={handleLocationClick}
+            >
+              <FaMapMarkerAlt className="text-pink-500 mr-1" />
+              <span className="whitespace-nowrap">{mockLocations[locationIndex]}</span>
+            </button>
+            {/* Search Button */}
+            <button
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-gray-200 transition shrink-0"
+              onClick={handleSearch}
+            >
+              <FaSearch className="text-gray-600" />
+            </button>
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="hidden sm:block w-px h-5 bg-gray-300" />
+        {/* Right: Hamburger Menu */}
+        <div className="sm:hidden">
+          <button onClick={() => setMenuOpen((prev) => !prev)}>
+            <FaBars className="text-gray-800 text-xl" />
+          </button>
+        </div>
 
-        {/* Interactive Location */}
-        <button
-          className="hidden sm:flex items-center text-sm text-gray-700 hover:text-pink-600 transition whitespace-nowrap"
-          onClick={handleLocationClick}
-        >
-          <FaMapMarkerAlt className="text-pink-500 mr-1" />
-          <span className="whitespace-nowrap">{mockLocations[locationIndex]}</span>
-        </button>
-
-
-        {/* Search Button */}
-        <button
-          className="bg-orange-500 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center hover:bg-orange-600 transition shrink-0"
-          onClick={handleSearch}
-        >
-          <FaSearch className="text-black text-xs sm:text-base" />
-        </button>
-      </div>
-
-      {/* Right: Hamburger Menu */}
-      <div className="sm:hidden">
-        <button onClick={() => setMenuOpen((prev) => !prev)}>
-          <FaBars className="text-gray-800 text-xl" />
-        </button>
-      </div>
-
-      {/* Right: Desktop Nav */}
-      <nav
-        className={`${menuOpen ? "flex" : "hidden"
+        {/* Right: Desktop Nav */}
+        <nav
+          className={`${
+            menuOpen ? "flex" : "hidden"
           } sm:flex items-center space-x-3 text-sm text-black ml-4 w-full sm:w-auto`}
-      >
-        <button
-          onClick={() => navigate('/help-center')}
-          className="hover:bg-gray-100 px-2 py-1 rounded transition">
-          Help Center
-        </button>
+        >
+          <button className="hover:bg-gray-100 px-2 py-1 rounded transition">
+            Events
+          </button>
+          <Link
+            to="/help-center"
+            className="hover:bg-gray-100 px-2 py-1 rounded transition text-black focus:outline-none"
+            style={{ fontWeight: 400, textDecoration: 'none !important' }}
+          >
+            Help Center
+          </Link>
 
-        {isUserLoggedIn ?
-          <button
-            onClick={handleLogout}
-            className="hover:bg-gray-100 px-2 py-1 rounded transition">
-            Logout
-          </button>
-          :
-          <button
-            onClick={() => navigate('/login')}
-            className="hover:bg-gray-100 px-2 py-1 rounded transition">
-            Login
-          </button>
-        }
-      </nav>
-    </header>
+          {isUserLoggedIn ? (
+            <button 
+              onClick={handleLogout}
+              className="hover:bg-gray-100 px-2 py-1 rounded transition">
+              Logout
+            </button>
+          ) : (
+              <button 
+                onClick={() => navigate('/login')}
+                className="hover:bg-gray-100 px-2 py-1 rounded transition">
+                Login
+              </button>
+          )}
+        </nav>
+      </header>
+      {/* <EventList searchResults={searchResults} /> */}
+    </>
   );
-}
+};
 
-
-
-
-
-
+export default GlobalNavBar;
