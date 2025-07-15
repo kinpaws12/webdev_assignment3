@@ -21,6 +21,14 @@ npm install
 npm run dev
 ```
 
+## Building for Production
+
+Create a production build:
+
+```bash
+npm run build && npx serve build/client
+```
+
 ### Node.js version
 
 We use node 20+ (20.19.2), set up your local or gloabl node version to 20+ using nvm: 
@@ -78,12 +86,4 @@ backend
 ├── global_types/
 ├── index.ts
 ├── server.ts
-```
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
 ```

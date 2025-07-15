@@ -80,6 +80,13 @@ export default function authReducer(
         case AuthActionTypes.LOGOUT:
             return initialState;
 
+        case AuthActionTypes.SET_AUTHENTICATED:
+            return {
+                ...state,
+                isAuthenticated: true,
+                loading: false,
+                error: null,
+            };
         
         // Handle refresh 
         case AuthActionTypes.REFRESH_REQUEST:

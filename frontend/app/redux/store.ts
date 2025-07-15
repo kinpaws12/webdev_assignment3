@@ -10,6 +10,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { persistStore } from 'redux-persist';
+import { validateToken } from './actions/auth/Auth-actionCreators';
 
 export const store = configureStore({
   reducer: rootReducer,
@@ -25,4 +26,6 @@ export const store = configureStore({
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export const persistor = persistStore(store);
+export const persistor = persistStore(store, null, ()=>{
+  store.dispatch(validateToken());
+});

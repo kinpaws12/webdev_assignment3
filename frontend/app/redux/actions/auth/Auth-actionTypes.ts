@@ -16,4 +16,7 @@ export enum AuthActionTypes {
   REFRESH_REQUEST = 'auth/REFRESH_REQUEST',
   REFRESH_SUCCESS = 'auth/REFRESH_SUCCESS',
   REFRESH_FAILURE = 'auth/REFRESH_FAILURE',
+
+  // Authenticated
+  SET_AUTHENTICATED = 'auth/SET_AUTHENTICATED',
 }
