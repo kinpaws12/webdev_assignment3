@@ -7,9 +7,11 @@ export default [
     route("help-center", "./pages/HelpCenter.tsx"), 
     route("account", "./pages/Account.tsx")
   ]),
-  
+
   layout("./features/auth/theme/AuthLayout.tsx", [
     route("login", "./pages/Login.tsx"),
     route("signup", "./pages/Signup.tsx"),
   ]),
+  
+  
 ] satisfies RouteConfig;

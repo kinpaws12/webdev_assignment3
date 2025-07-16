@@ -52,6 +52,7 @@ export const EventList = () => {
             time={event.time}
             location={event.location}
             image={event.image}
+            // onClick={...} // if you use onClick, pass title as argument
           />
         ))}
       </div>
