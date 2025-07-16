@@ -1,10 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import createHttpError from "http-errors";
-import {EventModel} from "./models/event.model";            // adjust path if model lives elsewhere
+import {EventModel} from "./models/event.model";    
 import type { LeanUser } from "../users/types/user.type";
 import { EventService } from "./event.service";
 import { CreateAndUpdateEventInput } from "./types/event.type";
-import { Types } from "mongoose";
 
 // GET http://localhost:5174/api/events
 export async function getAllEvents(

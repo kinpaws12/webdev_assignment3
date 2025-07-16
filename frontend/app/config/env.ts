@@ -22,7 +22,7 @@ const clientEnvSchema = z.object({
 })
 
 export const env = clientEnvSchema.parse(import.meta.env);
-console.log(import.meta.env)
+console.log(env) // DO NOT DELETE THIS
 
 export const isDev  = env.DEV;
 export const isProd = env.PROD;
