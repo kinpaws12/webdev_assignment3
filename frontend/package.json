@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "react-router build",
+    "prod:build": "npm run build && npx serve build/client",
     "start": "react-router serve",
     "typecheck": "react-router typegen && tsc",
     "postinstall": "flowbite-react patch"
@@ -59,6 +60,6 @@
     "typescript": "^5.8.3",
     "vite": "^7.0.4",
     "vite-tsconfig-paths": "^5.1.4",
-    "zod": "^3.22.2"
+    "zod": "^4.0.5"
   }
 }
