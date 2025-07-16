@@ -1,7 +1,7 @@
 // src/api/axios.ts
 import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { AxiosRequestHeaders } from "axios";
-import { env } from "~/config/env";
+import { parsedEnv } from "~/config/env";
 import { store } from "~/redux/store";
 import { refreshSuccess, logoutUser as logoutAction } from "~/redux/actions/auth/Auth-actionCreators";
 
@@ -14,7 +14,7 @@ const logout = () => {
 };
 
 export const api = axios.create({
-  baseURL: `${env.VITE_API_BASE_URL}${env.VITE_API_PREFIX}`,
+  baseURL: `${parsedEnv.VITE_API_BASE_URL}${parsedEnv.VITE_API_PREFIX}`,
   withCredentials: true,
 });
 
@@ -48,7 +48,7 @@ api.interceptors.response.use(
     if (!isRefreshing) {
       isRefreshing = true;
       try {
-        const { data } = await api.post(`${env.VITE_API_BASE_URL}${env.VITE_API_PREFIX}/auth/refresh-token`);
+        const { data } = await api.post(`${parsedEnv.VITE_API_BASE_URL}${parsedEnv.VITE_API_PREFIX}/auth/refresh-token`);
         setAccessToken(data.token); 
         isRefreshing = false;
         queue.forEach(cb => cb(data.token)); 
