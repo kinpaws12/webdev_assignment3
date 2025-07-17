@@ -1,10 +1,9 @@
-import type { Dispatch } from "redux";
 import { AuthActionTypes } from "./Auth-actionTypes";
-import { toast } from 'react-toastify';
 import type { SignupValues, LoginValues, User, LoginSuccessPayload } from "~/features/auth/types/auth_types";
 import * as authApi from '~/features/auth/services/authApi'
 import type { ThunkAction } from 'redux-thunk';
 import { persistor, type AppState } from "~/redux/store";
+import { jwtDecode }  from "jwt-decode";
 
 //Signup actions
 interface SignupRequestAction {
@@ -30,6 +29,7 @@ export type AuthActions =
   | LoginSuccessAction
   | LoginFailureAction
   | SyncLogoutAction
+  | SetAuthenticatedAction
   | RefreshRequestAction
   | RefreshSuccessAction
   | RefreshFailureAction;
@@ -120,6 +120,34 @@ export const logoutUser = ():
       console.error("Logout failed:", err);
     }
 }
+
+interface SetAuthenticatedAction {
+    type: AuthActionTypes.SET_AUTHENTICATED;
+}
+
+interface JwtPayload { 
+  exp: number 
+}
+
+export const validateToken = ():
+  ThunkAction<void, AppState, unknown, AuthActions> =>
+  async (dispatch, getState) => {
+    const { jwtToken } = (getState() as AppState).auth;
+    if (!jwtToken) return;
+
+    try {
+      const { exp } = jwtDecode<JwtPayload>(jwtToken);
+      const stillValid = exp * 1000 > Date.now();
+
+      if (stillValid) {
+        dispatch({ type: AuthActionTypes.SET_AUTHENTICATED });
+      } else {
+        await dispatch(logoutUser());
+      }
+    } catch {
+      await dispatch(logoutUser());
+    }
+  };
 
 // Refresh
 interface RefreshRequestAction {

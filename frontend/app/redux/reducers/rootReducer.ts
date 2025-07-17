@@ -24,7 +24,7 @@ const storage =
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['jwtToken', 'isAuthenticated'],
+  whitelist: ['jwtToken', 'isAuthenticated', 'currentUser'],
 };
 
 export const rootReducer = combineReducers({

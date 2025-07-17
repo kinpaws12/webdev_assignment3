@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import EventInfo from "../components/EventDetails/EventInfo";
-import EventMap from "../components/EventDetails/EventMap";
-import BookButton from "../components/EventDetails/BookButton";
+import EventInfo from "../features/events/EventDetails/EventInfo";
+import EventMap from "../features/events/EventDetails/EventMap";
+import BookButton from "../features/events/EventDetails/BookButton";
 
 // Mock events data
 const mockEvents = [

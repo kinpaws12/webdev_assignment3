@@ -3,6 +3,7 @@ import { FaSearch, FaMapMarkerAlt, FaBars } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "~/redux/actions/auth/Auth-actionCreators";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks";
+import { Dropdown, Image } from "react-bootstrap";
 import type { EventCardProps } from '~/types/events';
 
 const GlobalNavBar = () => {
@@ -14,6 +15,9 @@ const GlobalNavBar = () => {
   const navigate = useNavigate();
 
   const isUserLoggedIn = useAppSelector(state => state.auth.isAuthenticated);
+
+  const currentUser = useAppSelector(state => state.auth.currentUser);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   // Reset user state to null
   const handleLogout = () => {
@@ -40,16 +44,14 @@ const GlobalNavBar = () => {
   };
 
   return (
-    <>
-      <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-2 shadow-sm bg-white">
-        {/* Left: Logo */}
-        <Link
-          to="/"
-          className="flex items-center flex-shrink-0 no-underline focus:outline-none"
-          style={{ textDecoration: 'none' }}
-        >
-          <span className="text-[#f05537] font-bold text-2xl">eventflow</span>
-        </Link>
+    <header className="sticky top-0 z-50 flex items-center justify-between px-4 py-2 shadow-sm bg-white">
+      {/* Left: Logo */}
+      <div
+        className="text-orange-500 font-bold text-xl sm:text-2xl whitespace-nowrap mr-2 cursor-pointer"
+        onClick={() => navigate('/')}
+      >
+        eventflow
+      </div>
 
         {/* Center: Search Box */}
         <div className="flex-1 flex justify-center">
@@ -108,24 +110,44 @@ const GlobalNavBar = () => {
           >
             Help Center
           </Link>
-
-          {isUserLoggedIn ? (
-            <button 
-              onClick={handleLogout}
-              className="hover:bg-gray-100 px-2 py-1 rounded transition">
-              Logout
-            </button>
-          ) : (
-              <button 
-                onClick={() => navigate('/login')}
-                className="hover:bg-gray-100 px-2 py-1 rounded transition">
-                Login
-              </button>
-          )}
-        </nav>
-      </header>
-      {/* <EventList searchResults={searchResults} /> */}
-    </>
+        {isUserLoggedIn ? (
+          <Dropdown align="end" show={showDropdown} onToggle={setShowDropdown}>
+            <Dropdown.Toggle
+              as="span"
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                border: "none",
+                background: "none",
+                boxShadow: "none",
+              }}
+            >
+              <Image
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                  currentUser?.name || "U"
+                )}&background=random&rounded=true&size=32`}
+                roundedCircle
+                width={32}
+                height={32}
+                alt="profile"
+              />
+              <span style={{ marginLeft: 8 }}>{currentUser?.name}</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => navigate('/account')}>Account Setting</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <button
+            onClick={() => navigate('/login')}
+            className="hover:bg-gray-100 px-2 py-1 rounded transition">
+            Login
+          </button>
+        )}
+      </nav>
+    </header>
   );
 };
 

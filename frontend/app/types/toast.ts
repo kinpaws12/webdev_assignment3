@@ -3,7 +3,6 @@ export default interface Toast {
   variant: 'success' | 'error' | 'info' | 'warning';
   text: string;
 }
- 
 export default interface UIState {
   toasts: Toast[];
-} 
+}
