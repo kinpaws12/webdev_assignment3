@@ -24,12 +24,12 @@ export interface User {
   name: string;
   email: string;
   phone?: string;
-  signupAt: Date;
-  loginTime: string;
+  createdAt: Date;
+  loginTime: string; // TO-DO: add to user model
   // current account status
-  status: 'pending' | 'active' | 'suspended';
+  status: 'pending' | 'Active' | 'suspended';
   // permission level
-  accessLevel: 'user' | 'organizer' | 'admin' | 'superadmin';
+  role: 'USER' | 'ORGANIZER' |'ADMIN';
 }
 
 export interface AuthFormProps {

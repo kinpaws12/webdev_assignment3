@@ -13,13 +13,19 @@ export class AuthService {
 
         if (data.name?.trim() === '') delete (data as any).name;
         
-        const user = await UserModel.create({ ...data, password: hashPassword });
-        const { _id, name, email, role } = user.toObject() as LeanUser;
+        const user = await UserModel.create({ 
+            ...data, 
+            password: 
+            hashPassword, 
+            status: "Active" 
+        });
+        const { _id, name, email, role, status } = user.toObject() as LeanUser;
         const registered_User = { 
                     id: _id.toString(), 
                     name, 
                     email, 
-                    role 
+                    role,
+                    status 
                 }
         return registered_User;
     }
@@ -40,13 +46,13 @@ export class AuthService {
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) throw new Error("Invalid credentials");
 
-        const { _id, name, email: userEmail, role } = user;
+        const { _id, name, email: userEmail, role, status, createdAt } = user;
 
         const accessToken = this.signToken(user); 
         const refreshToken = this.refreshToken(user);
 
         return {
-            user: { id: _id.toString(), name, email, role }, 
+            user: { id: _id.toString(), name, email, role, status, createdAt }, 
             token: accessToken,
             refreshToken
         };

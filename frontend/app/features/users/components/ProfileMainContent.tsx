@@ -10,10 +10,13 @@ interface ProfileMainContentProps {
 
 export default function ProfileMainContent({ section }: ProfileMainContentProps) {
   const currentUser = useAppSelector(state => state.auth.currentUser);
+  console.log("current user is: ", currentUser);
   const user = {
     name: currentUser?.name,
     email: currentUser?.email,
-    joined: currentUser?.signupAt,
+    joined: currentUser?.createdAt,
+    access: currentUser?.role,
+    status: currentUser?.status,
     profilePhoto: '',
   };
 
@@ -56,7 +59,7 @@ export default function ProfileMainContent({ section }: ProfileMainContentProps)
       {/* Contact Info Card */}
       <Card variant="outlined" sx={{ borderRadius: 2 }}>
         <CardContent>
-          <Typography variant="h6" gutterBottom>Contact Information</Typography>
+          <Typography variant="h6" gutterBottom>Personal Information</Typography>
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="First Name" value={user.name} fullWidth disabled />
@@ -66,9 +69,15 @@ export default function ProfileMainContent({ section }: ProfileMainContentProps)
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Email" value={user.email} fullWidth disabled />
-            </Grid> 
+            </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField label="Joined" value={user.joined} fullWidth disabled />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField label="Account Type" value={user.access} fullWidth disabled />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <TextField label="User Status" value={user.status} fullWidth disabled />
             </Grid>
           </Grid>
         </CardContent>

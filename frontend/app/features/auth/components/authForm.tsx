@@ -67,7 +67,10 @@ export default function AuthForm({ mode }: AuthFormProps) {
         onSubmit={handleSignup}
       >
         {({ errors, touched, isSubmitting }) => (
-          <Form noValidate>
+          <Form 
+            noValidate
+            style={{ maxHeight: '80vh', overflowY: 'auto' }}
+            >
             {/* Full name */}
             <Box mb={2}>
               <Field name="name">
@@ -230,7 +233,10 @@ export default function AuthForm({ mode }: AuthFormProps) {
       onSubmit={handleLogin}
     >
       {({ errors, touched, isSubmitting }) => (
-        <Form noValidate>
+        <Form 
+          noValidate
+          style={{ maxHeight: '80vh', overflowY: 'auto' }}
+          >
           {/* Email */}
           <Box mb={2}>
             <Field name="email">

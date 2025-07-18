@@ -14,6 +14,8 @@ export interface AuthticatedUser {
     name: string;
     email: string;
     role: 'USER' | 'ORGANIZER' | 'ADMIN';
+    status: 'Active' | 'Inactive';
+    createdAt: Date;
   };
   token: string;
   refreshToken: string
