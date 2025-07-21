@@ -69,7 +69,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         {({ errors, touched, isSubmitting }) => (
           <Form 
             noValidate
-            style={{ maxHeight: '80vh', overflowY: 'auto' }}
+            style={{ maxHeight: '70vh', overflowY: 'auto' }}
             >
             {/* Full name */}
             <Box mb={2}>
@@ -235,7 +235,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
       {({ errors, touched, isSubmitting }) => (
         <Form 
           noValidate
-          style={{ maxHeight: '80vh', overflowY: 'auto' }}
+          style={{ maxHeight: '70vh', overflowY: 'auto' }}
           >
           {/* Email */}
           <Box mb={2}>

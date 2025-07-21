@@ -25,12 +25,14 @@ export interface User {
   email: string;
   phone?: string;
   createdAt: Date;
-  loginTime: string; // TO-DO: add to user model
+  loginTime?: string; // TO-DO: add to user model
   // current account status
   status: 'pending' | 'Active' | 'suspended';
   // permission level
   role: 'USER' | 'ORGANIZER' |'ADMIN';
 }
+
+export type loggedUser = Omit<User, 'id'>;
 
 export interface AuthFormProps {
   mode: 'signup' | 'login';
