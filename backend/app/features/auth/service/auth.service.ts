@@ -19,11 +19,12 @@ export class AuthService {
             hashPassword, 
             status: "Active" 
         });
-        const { _id, name, email, role, status } = user.toObject() as LeanUser;
+        const { _id, name, email, phone, role, status } = user.toObject() as LeanUser;
         const registered_User = { 
                     id: _id.toString(), 
                     name, 
-                    email, 
+                    email,
+                    phone, 
                     role,
                     status 
                 }
@@ -46,13 +47,20 @@ export class AuthService {
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) throw new Error("Invalid credentials");
 
-        const { _id, name, email: userEmail, role, status, createdAt } = user;
+        const { _id, name, email: userEmail, phone, role, status, createdAt } = user;
 
         const accessToken = this.signToken(user); 
         const refreshToken = this.refreshToken(user);
 
         return {
-            user: { id: _id.toString(), name, email, role, status, createdAt }, 
+            user: { 
+                id: _id.toString(), 
+                name, email, 
+                phone, 
+                role, 
+                status, 
+                createdAt 
+            }, 
             token: accessToken,
             refreshToken
         };

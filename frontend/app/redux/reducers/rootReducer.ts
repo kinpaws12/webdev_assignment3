@@ -2,6 +2,7 @@ import { persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
 import eventReducer from './eventReducer/eventReducer';
 import authReducer from './authReducer/authReducer';
+import accountReducer from './accountReducer/accountReducer';
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 const createNoopStorage = () => ({
@@ -30,5 +31,6 @@ const authPersistConfig = {
 export const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   events: eventReducer,
+  account: accountReducer
   // other reducers
 });

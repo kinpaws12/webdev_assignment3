@@ -1,4 +1,5 @@
-import type { User, SignupValues, LoginValues } from "~/features/auth/types/auth_types";
+import type { SignupValues, LoginValues } from "~/features/auth/types/auth_types";
+import type { User } from "~/features/users/types";
 
 export default interface AuthState {
     pendingSignup?: SignupValues; //form data to be sent

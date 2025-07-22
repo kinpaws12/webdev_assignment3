@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 import { type ProfileMainContentProps } from '../types';
-import AboutMe from './Personal_Info';
+import AboutMe from './Account_Info';
 
 export default function ProfileMainContent({ section }: ProfileMainContentProps) {
   
-  if (section === 'Personal Calendar') {
+  if (section === 'Calendar') {
     return (
       <Card variant="outlined" sx={{ borderRadius: 2 }}>
         <CardContent>

@@ -1,8 +1,10 @@
 import type AuthState from "./authStateProperties";
 import type { AuthActions } from "../../actions/auth/Auth-actionCreators";
 import { AuthActionTypes } from "../../actions/auth/Auth-actionTypes";
+import type { AccountActions } from "~/redux/actions/account/Account-actionTypes";
+import { AccountActionTypes } from "~/redux/actions/account/Account-actionTypes";
 
-const initialState: AuthState = {
+const initialAuthState: AuthState = {
     pendingSignup: undefined,
     pendingLogin: undefined,
 
@@ -15,8 +17,8 @@ const initialState: AuthState = {
 }
 
 export default function authReducer(
-    state = initialState,
-    action: AuthActions
+    state = initialAuthState,
+    action: AuthActions | AccountActions
 ): AuthState {
     switch(action.type) {
         //Signup
@@ -78,7 +80,7 @@ export default function authReducer(
 
         // Logout – restore slice to initial state
         case AuthActionTypes.LOGOUT:
-            return initialState;
+            return initialAuthState;
 
         case AuthActionTypes.SET_AUTHENTICATED:
             return {
@@ -111,6 +113,17 @@ export default function authReducer(
                 loading: false,
                 error: action.payload.error,
             };
+        // Account update to refresh Auth
+        case AccountActionTypes.UPDATE_ACCOUNT_SUCCESS:
+            return {
+                ...state,
+                currentUser: action.payload
+            };
+        case AccountActionTypes.UPDATE_ACCOUNT_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error
+            }
         default:
             return state;
     }

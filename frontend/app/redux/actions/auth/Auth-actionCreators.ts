@@ -1,5 +1,6 @@
 import { AuthActionTypes } from "./Auth-actionTypes";
-import type { SignupValues, LoginValues, User, LoginSuccessPayload } from "~/features/auth/types/auth_types";
+import type { SignupValues, LoginValues, LoginSuccessPayload } from "~/features/auth/types/auth_types";
+import type { User } from "~/features/users/types";
 import * as authApi from '~/features/auth/services/authApi'
 import type { ThunkAction } from 'redux-thunk';
 import { persistor, type AppState } from "~/redux/store";

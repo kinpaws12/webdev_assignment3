@@ -1,3 +1,5 @@
+import type { User } from "~/features/users/types";
+
 export interface SignupValues {
   name: string;
   email: string;
@@ -18,21 +20,6 @@ export interface LoginSuccessPayload {
   user:  User;
   token: string;
 }
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone?: string;
-  createdAt: Date;
-  loginTime?: string; // TO-DO: add to user model
-  // current account status
-  status: 'pending' | 'Active' | 'suspended';
-  // permission level
-  role: 'USER' | 'ORGANIZER' |'ADMIN';
-}
-
-export type loggedUser = Omit<User, 'id'>;
 
 export interface AuthFormProps {
   mode: 'signup' | 'login';

@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import ProfileSidebar from './ProfileSidebar';
 import ProfileMainContent from './ProfileMainContent';
 
-const SECTIONS = ['User Information', 'Event Bookings', 'Personal Calendar', 'Chat Room'] as const;
+const SECTIONS = ['User Information', 'Event Bookings', 'Calendar', 'Chat Room'] as const;
 type Section = typeof SECTIONS[number];
 
 export default function ProfileDashboard() {
