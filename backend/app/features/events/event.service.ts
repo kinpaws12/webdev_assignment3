@@ -8,6 +8,10 @@ export class EventService {
     return await EventModel.find().sort({ createdAt: -1 }).exec();
   }
 
+  static async getAllByUsrId(usrId: string) {
+    return await EventModel.findById({ usrId }).exec();
+  }
+
   static async getByCategory(category: string) {
     return await EventModel.find({ category }).exec();
   }
@@ -28,7 +32,7 @@ export class EventService {
     return created.toObject() as LeanEvent;
   }
 
-  static async update(
+  static async updateEvent(
     id: string,
     patch: UpdateQuery<CreateAndUpdateEventInput>
   ): Promise<LeanEvent | null> {

@@ -1,0 +1,68 @@
+import { api } from "~/api/central-axios";
+import type { CreateEventBody, DeletedEvent, Events, TheEvent, UpdateAnEvent, UpdatedEvent } from "../types";
+
+export async function fetchAllEvents(): Promise<Events> {
+    try {
+        const { data } = await api.get<Events>("/events");
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Fetch events failed (${status})`);
+    }
+}
+
+export async function fetchEventById(id: string): Promise<TheEvent> {
+    try{
+        const { data } = await api.get<TheEvent>(`/events/${id}`);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Fetch event: "${id}" failed (${status})`);
+    }
+}
+
+export async function fetchEventByCategory(categoryName: string): Promise<Events> {
+    try {
+        const { data } = await api.get<Events>(`/events/categories/${categoryName}`);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Fetch events from: "${categoryName}" failed (${status})`);
+    }
+} 
+
+// Organizer
+export async function createEvent(CreateEventPayload: CreateEventBody): Promise<TheEvent> {
+    try{
+        const { data } = await api.post(`/categories/${CreateEventPayload.category}/${CreateEventPayload.title}`, CreateEventPayload);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Create event: ${CreateEventPayload.title} under "${CreateEventPayload.category}" failed (${status})`);
+    }
+}
+
+// Orgainzer
+export async function updateEvent(UpdateEventFieldsBody: UpdateAnEvent): Promise<UpdatedEvent> {
+    try {
+        const { data } = await api.put(`/events/${UpdateEventFieldsBody.id}`, UpdateEventFieldsBody.updateFields);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Update event failed (${status}). \n
+            id: ${UpdateEventFieldsBody.id}; title: ${UpdateEventFieldsBody.updateFields.title}`);
+    }
+}
+
+export async function deleteEvent(id: string): Promise<DeletedEvent> {
+    try {
+        const { data } = await api.delete(`/events/${id}`);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Failed to delete event: (${status}) \n
+            id: ${id}`);
+    }
+}
+
+// Admin

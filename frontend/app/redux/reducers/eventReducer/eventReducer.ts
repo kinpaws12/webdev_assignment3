@@ -1,40 +1,130 @@
-import type { EventProperties } from "../../../types/events";
-import * as actionTypes from "../../actions/events/actionTypes";
-import type { EventState } from "./eventStateProperties";
+import { EventActionTypes, type EventActions } from "~/redux/actions/events/actionTypes";
+import { type EventState, initialEventState } from "./eventStateProperties";
 
-const initialState: EventState = {
-    events: [],
-    loading: false,
-    error: null
-}
-
-export default function eventReducer (
-    state = initialState, 
-    action: any
+export default function eventReducer(
+  state = initialEventState,
+  action: EventActions
 ): EventState {
     switch (action.type) {
-        // Fetch Events
-        case actionTypes.FETCH_EVENTS_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
-        case actionTypes.FETCH_EVENTS_SUCCESS:
-            return {
-                ...state,
-                events: action.payload,
-                loading: false,
-            }
-        case actionTypes.FETCH_EVENTS_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
-            }
-        // To be completed...
+    // Fetch All
+    case EventActionTypes.FETCH_EVENTS_REQUEST:
+      return { 
+        ...state, 
+        loading: true, 
+        error: null 
+    };
+    case EventActionTypes.FETCH_EVENTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        items: action.payload,
+        error: null,
+      };
+    case EventActionTypes.FETCH_EVENTS_FAILURE:
+      return { 
+        ...state, 
+        loading: false, 
+        error: action.payload.error 
+    };
 
-        
-        default:
-            return state;
+    // Fetch one
+    case EventActionTypes.FETCH_ONE_EVENT_REQUEST:
+      return { 
+        ...state, 
+        loading: true, 
+        error: null 
+    };
+    case EventActionTypes.FETCH_ONE_EVENT_SUCCESS:
+      return { 
+        ...state, 
+        loading: false, 
+        current: action.payload
+    };
+
+    case EventActionTypes.FETCH_ONE_EVENT_FAILURE:
+      return { 
+        ...state, 
+        loading: false, 
+        error: action.payload.error 
+    };
+
+    // CREATE 
+    case EventActionTypes.CREATE_EVENT_REQUEST:
+      return { 
+        ...state, 
+        updating: true, 
+        error: null 
+    };
+
+    case EventActionTypes.CREATE_EVENT_SUCCESS:
+      return {
+        ...state,
+        updating: false,
+        items: [...state.items, action.payload],
+        current: action.payload,
+      };
+
+    case EventActionTypes.CREATE_EVENT_FAILURE:
+      return { 
+        ...state, 
+        updating: false, 
+        error: action.payload.error 
+    };
+
+    // Update
+    case EventActionTypes.UPDATE_EVENT_REQUEST:
+      return { 
+        ...state, 
+        updating: true, 
+        error: null 
+    };
+
+    case EventActionTypes.UPDATE_EVENT_SUCCESS:
+      return {
+        ...state,
+        updating: false,
+        items: state.items.map((e) =>
+          e.id === action.payload.id ? action.payload : e
+        ),
+        current:
+          state.current?.id === action.payload.id
+            ? action.payload
+            : state.current,
+      };
+
+    case EventActionTypes.UPDATE_EVENT_FAILURE:
+      return { 
+        ...state, 
+        updating: false, 
+        error: action.payload.error 
+    };
+
+    //DELETE
+    case EventActionTypes.DELETE_EVENT_REQUEST:
+      return { 
+        ...state, 
+        deleting: true, 
+        error: null 
+    };
+
+    case EventActionTypes.DELETE_EVENT_SUCCESS:
+      return {
+        ...state,
+        deleting: false,
+        items: state.items.filter((e) => e.id !== action.payload.id),
+        current:
+          state.current?.id === action.payload.id ? null : state.current,
+      };
+
+    case EventActionTypes.DELETE_EVENT_FAILURE:
+      return { 
+        ...state, 
+        deleting: false, 
+        error: action.payload.error 
+    };
+
+    /* ───────── DEFAULT ───────── */
+    default:
+      return state;
     }
 }

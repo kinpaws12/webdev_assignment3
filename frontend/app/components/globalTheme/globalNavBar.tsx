@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { logoutUser } from "~/redux/actions/auth/Auth-actionCreators";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks";
 import { Dropdown, Image } from "react-bootstrap";
-import type { EventCardProps } from '~/types/events';
+import type { EventCardProps } from '~/features/events/types';
 
 const GlobalNavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

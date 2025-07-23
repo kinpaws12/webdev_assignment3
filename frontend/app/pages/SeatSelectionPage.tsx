@@ -1,4 +1,4 @@
-import SeatMap from '../features/events/SeatSelection/SeatMap';
+import SeatMap from '../features/events/components/SeatMap';
 
 export default function SeatSelectionPage() {
   return (

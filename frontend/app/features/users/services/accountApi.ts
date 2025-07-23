@@ -1,6 +1,10 @@
 import { api } from "~/api/central-axios";
 import type { UpdateAccountInfo } from "../types";
 
+export async function getUserInfo() {
+    
+}
+
 export async function updateUserInfo(
     updateData: UpdateAccountInfo
 ) {

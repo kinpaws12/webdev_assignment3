@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 import { type ProfileMainContentProps } from '../types';
 import AboutMe from './Account_Info';
+import EventBookings from '~/features/events/components/EventBookings';
 
 export default function ProfileMainContent({ section }: ProfileMainContentProps) {
   
@@ -29,12 +30,7 @@ export default function ProfileMainContent({ section }: ProfileMainContentProps)
 
   if (section === 'Event Bookings') {
     return (
-      <Card variant="outlined" sx={{ borderRadius: 2 }}>
-        <CardContent>
-          <Typography variant="h6">Event Bookings</Typography>
-          <Typography variant="body2" color="text.secondary">Booked Events</Typography>
-        </CardContent>
-      </Card>
+      <EventBookings/>
     );
   }
 

@@ -4,13 +4,17 @@ import { authenticate } from "../../global_middleware/authenticator";
 import { authorize } from "../../global_middleware/authorizor";
 import { ORGANIZER_ROLE, ADMIN_ROLE} from "../users/roles";
 
-const publicEventRouter  = Router();
-publicEventRouter.use(authenticate);
+const publicEventRouter = Router();
+const privateEventRouter = Router();
+privateEventRouter.use(authenticate);
 
 // public
 publicEventRouter.get("/", eventController.getAllEvents);
 publicEventRouter.get("/categories/:categoryName", eventController.getEventsByCategory);
-publicEventRouter.get("/:id", eventController.getEventById);
+
+// private
+privateEventRouter.get("/:id", eventController.getEventById);
+privateEventRouter.get("/:id", eventController.getAllEventsByUserId);
 
 // Organizer
 const organizerEventRouter = Router();

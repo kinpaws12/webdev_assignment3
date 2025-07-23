@@ -1,16 +1,17 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import type { EventCardProps } from '~/types/events';
+import type { EventCardProps } from '~/features/events/types';
 
-export const EventCard = ({ title, date, time, location, image, onClick }: Omit<EventCardProps, 'id'>) => {
+export const EventCard = ({ title, date, time, location, imageUrl, onClick }: Omit<EventCardProps, 'id'>) => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
     if (onClick) {
       onClick(title);
     } else {
-      navigate(`/events/${encodeURIComponent(title)}`);
+      // navigate(`/events/${encodeURIComponent(title)}`);
+      navigate("/event-details")
     }
   };
 
@@ -28,7 +29,7 @@ export const EventCard = ({ title, date, time, location, image, onClick }: Omit<
     >
       <Card.Img
         variant="top"
-        src={image}
+        src={imageUrl}
         alt={title}
         style={{ borderTopLeftRadius: '18px', borderTopRightRadius: '18px', height: 170, objectFit: 'cover' }}
       />

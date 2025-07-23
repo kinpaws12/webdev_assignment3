@@ -19,6 +19,19 @@ export async function getAllEvents(
   }
 }
 
+export async function getAllEventsByUserId(
+  _req: Request<{ userId: string}>,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const userEvents = await EventService.getAllByUsrId(_req.params.userId);
+    res.status(200).json(userEvents);
+  } catch (err) {
+    next(createHttpError(500, "Failed to fetch events"))
+  }
+}
+
 // GET http://localhost:5174/api/events/categories/:categoryName
 export async function getEventsByCategory(
   req: Request<{ categoryName: string }>,
@@ -78,7 +91,7 @@ export async function createEventByCategory(
 
 // PUT http://localhost:5174/api/events/:id
 export async function updateEvent(
-  req: Request<{ id: string }>,
+  req: Request<{ id: string, updateFields: Partial<CreateAndUpdateEventInput>}>,
   res: Response,
   next: NextFunction
 ) {
