@@ -11,6 +11,10 @@ const EventSchema = new Schema<Event>(
       type: String,
       required: true
     },
+    imageUrl: {
+      type: String,
+      required: false
+    },
     category: {
       type: String,
       required: true

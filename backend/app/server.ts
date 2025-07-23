@@ -33,7 +33,7 @@ app.use(cookieParser());
 
 // Root health‑check
 app.get("/", (_req, res) => {
-  res.json(`Hi, this prod-manager-service API is running on port ${parsedEnv.PORT}`);
+  res.json(`Hi, this eventflow server API is running on port ${parsedEnv.PORT}`);
 });
 
 app.use("/api", apiRouter);

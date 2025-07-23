@@ -11,6 +11,12 @@ export async function fetchAllEvents(): Promise<Events> {
     }
 }
 
+// export async function fetchAllEventsByUsrId(): Promise<Events> {
+//     try {
+//         const { data } = await api.get<Events>("")
+//     }
+// } 
+
 export async function fetchEventById(id: string): Promise<TheEvent> {
     try{
         const { data } = await api.get<TheEvent>(`/events/${id}`);
