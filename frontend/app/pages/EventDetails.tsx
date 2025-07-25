@@ -1,13 +1,40 @@
-import { useParams } from 'react-router-dom';
 import EventInfo from "../features/events/components/EventInfo";
 import EventMap from "../features/events/components/EventMap";
 import BookButton from "../features/events/components/BookButton";
-import { mockEvents } from '~/features/events/components/EventBookings';
+import { useParams } from "react-router-dom";
+import { useAppSelector } from '~/redux/hooks';
 
 export default function EventDetails() {
-  const { id } = useParams<{ id: string }>();
-  const decodedTitle = decodeURIComponent(id || '');
-  const event = mockEvents.find(e => e.name === decodedTitle) || mockEvents[0];
+  const events = useAppSelector((state) => state.events.events);
+  const { eventId } = useParams<{ eventId: string }>();
+  console.log('EventDetails: eventId from URL =', eventId);
+
+  const event = events.find((ev) => {
+    const mongoId =
+      typeof ev._id === 'object' && ev._id !== null && 'toString' in ev._id
+        ? (ev._id as unknown as { toString(): string }).toString()
+        : (ev._id as string);
+
+    return mongoId === eventId || (ev as any).id === eventId;
+  });
+
+  if (events.length === 0) {
+    return (
+      <div className="max-w-screen-lg mx-auto p-6 text-center">
+        <p className="text-gray-600">Loading event details…</p>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="max-w-screen-lg mx-auto p-6 text-center">
+        <p className="text-gray-600">
+          Event not found{eventId ? ` (id: ${eventId})` : ''}.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -16,7 +43,7 @@ export default function EventDetails() {
         <div className="w-full h-[300px] overflow-hidden">
           <img
             src={event.imageUrl}
-            alt={event.name}
+            alt={event.title}
             className="w-full h-full object-cover"
           />
         </div>
@@ -26,19 +53,23 @@ export default function EventDetails() {
         {/* Left (Event Info + Map + Book Button) */}
         <div className="md:col-span-2">
           <EventInfo
-            title={event.name}
+            title={event.title}
+            category={event.category}
             date={event.date}
-            time={event.time}
             location={event.location}
             description={event.description}
           />
           <EventMap />
-          <BookButton eventInfo={{
-            title: event.name,
-            date: event.date,
-            time: event.time,
-            location: event.location
-          }} />
+          <BookButton
+            eventInfo={{
+              title: event.title,
+              date:
+                typeof event.date === "string"
+                  ? event.date
+                  : new Date(event.date).toISOString(),
+              location: event.location,
+            }}
+          />
         </div>
 
         {/* Right (Chat Box or future components) */}

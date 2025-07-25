@@ -106,10 +106,10 @@ export default function eventReducer(
         ...state,
         updating: false,
         events: state.events.map((event) =>
-          event.id === action.payload.id ? action.payload : event
+          event._id === action.payload._id ? action.payload : event
         ),
         selectedEvent:
-          state.selectedEvent?.id === action.payload.id
+          state.selectedEvent?._id === action.payload._id
             ? action.payload
             : state.selectedEvent,
       };
@@ -133,9 +133,9 @@ export default function eventReducer(
       return {
         ...state,
         deleting: false,
-        events: state.events.filter((e) => e.id !== action.payload.id),
+        events: state.events.filter((e) => e._id !== action.payload._id),
         selectedEvent:
-          state.selectedEvent?.id === action.payload.id ? null : state.selectedEvent,
+          state.selectedEvent?._id === action.payload._id ? null : state.selectedEvent,
       };
 
     case EventActionTypes.DELETE_EVENT_FAILURE:

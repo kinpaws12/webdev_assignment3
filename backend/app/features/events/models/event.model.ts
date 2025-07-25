@@ -43,7 +43,7 @@ const EventSchema = new Schema<Event>(
     },
     status: { 
       type: String, 
-      enum: ['PENDING','APPROVED','REJECTED'], 
+      enum: ['PENDING','APPROVED','REJECTED','CANCELLED'], 
       default: 'PENDING' 
     }
   },

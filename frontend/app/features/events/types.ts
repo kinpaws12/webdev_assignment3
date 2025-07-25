@@ -1,7 +1,21 @@
 export type SeatStatus = "available" | "vip" | "booked" | "selected";
 
+export const enum EventStatus {
+  Pending     = 'PENDING',
+  Approved    = 'APPROVED',
+  Rejected    = 'REJECTED',
+  Confirmed   = 'CONFIRMED',
+  Cancelled   = 'CANCELLED',
+  Booked      = 'BOOKED',
+  Waitlisted  = 'WAITLISTED',
+}
+
+export const enum EventBookingStatus {
+
+}
+
 export interface TheEvent {
-  id: string,
+  _id: string,
   title: string;
   description?: string;
   imageUrl?: string;
@@ -35,15 +49,15 @@ export type UserEvents = UserEvent[];
 export type Events = TheEvent[];
 
 // Create
-export type CreateEventBody = Omit<TheEvent, 'id' | 'createdAt' | 'updatedAt' | 'status'>;
+export type CreateEventBody = Omit<TheEvent, '_id' | 'createdAt' | 'updatedAt' | 'status'>;
 // Update
 export type UpdateAnEvent = {
-  id: string,
-  updateFields: Omit<TheEvent, 'id' | 'createdAt' | 'updatedAt' | 'organizer'>
+  _id: string,
+  updateFields: Omit<TheEvent, '_id' | 'createdAt' | 'updatedAt' | 'organizer'>
 }
 export type UpdatedEvent = TheEvent
 // Delete
-export type DeletedEvent = Pick<TheEvent, 'id' | 'title'>;
+export type DeletedEvent = Pick<TheEvent, '_id' | 'title'>;
 
 export interface EventCardProps {
   title: string;

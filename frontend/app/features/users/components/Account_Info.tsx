@@ -12,7 +12,7 @@ export default function AboutMe() {
   const dispatch = useAppDispatch();
 
   const baseUser = {
-    id: (currentUser?.id || currentUser?._id || '') as string,
+    id: (currentUser?._id || '') as string,
     name: currentUser?.name ?? '',
     email: currentUser?.email ?? '',
     phone: currentUser?.phone ?? '',
@@ -43,7 +43,7 @@ export default function AboutMe() {
     if (edited.name !== original.name)   updateFields.name  = edited.name;
     if (edited.email !== original.email) updateFields.email = edited.email;
     if (edited.phone !== original.phone) updateFields.phone = edited.phone;
-    return { id: edited.id || (edited as any)._id, updateFields };
+    return { _id: edited.id || (edited as any)._id, updateFields };
   };
 
   const handleSave = async () => {

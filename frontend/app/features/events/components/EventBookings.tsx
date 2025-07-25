@@ -16,7 +16,7 @@ import {
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { shallowEqual } from 'react-redux';
 import { fetchAllEventsById } from '~/redux/actions/events/Event-actionCreators';
-import type { TheEvent, UserEvent } from '~/features/events/types';
+import type { UserEvent } from '~/features/events/types';
 
 type EventStatus = 'BOOKED' | 'PENDING' | 'CANCELLED';
 
@@ -40,7 +40,7 @@ function EventBookings() {
 
   useEffect(() => {
     if (!currentUserId || currentUserEvents.length !== 0 || loading) {
-      console.log("you reached here!")
+      console.log("you reached here! Check what's going wrong!")
       return;
     }
       // CheckPoint: DO NOT DELETE
