@@ -57,12 +57,12 @@ export async function createEvent(CreateEventPayload: CreateEventBody): Promise<
 // Orgainzer
 export async function updateEvent(UpdateEventFieldsBody: UpdateAnEvent): Promise<UpdatedEvent> {
     try {
-        const { data } = await api.put(`/events/${UpdateEventFieldsBody.id}`, UpdateEventFieldsBody.updateFields);
+        const { data } = await api.put(`/events/${UpdateEventFieldsBody._id}`, UpdateEventFieldsBody.updateFields);
         return data;
     } catch (err: any) {
         const status = err.response?.status ?? "network";
         throw new Error(`Update event failed (${status}). \n
-            id: ${UpdateEventFieldsBody.id}; title: ${UpdateEventFieldsBody.updateFields.title}`);
+            id: ${UpdateEventFieldsBody._id}; title: ${UpdateEventFieldsBody.updateFields.title}`);
     }
 }
 

@@ -36,7 +36,7 @@ export const deleteAccount =  (
     return async (dispatch) => {
         dispatch({
             type: AccountActionTypes.DELETE_ACCOUNT_REQUEST,
-            payload: {id: deleteId}
+            payload: {_id: deleteId}
         });
         try {
             const deletedAccount = await accountApi.deleteAccount(deleteId);

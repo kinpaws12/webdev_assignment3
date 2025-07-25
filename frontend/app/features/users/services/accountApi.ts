@@ -9,7 +9,7 @@ export async function updateUserInfo(
     updateData: UpdateAccountInfo
 ) {
     try {
-        const { data } = await api.put(`/users/${updateData.id}`, updateData);
+        const { data } = await api.put(`/users/${updateData._id}`, updateData);
         return data;
     } catch (err: any) {
         const status = err.response?.status ?? "network";

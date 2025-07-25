@@ -33,7 +33,7 @@ export const EventList = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {events.map((event) => (
             <EventCard
-              key={event.id}
+              key={event._id}
               title={event.title}
               date={event.date.toString()}
               time={new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
