@@ -14,8 +14,9 @@ import {
   ListItemText,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
+import { shallowEqual } from 'react-redux';
 import { fetchAllEventsById } from '~/redux/actions/events/Event-actionCreators';
-import type { TheEvent } from '~/features/events/types';
+import type { TheEvent, UserEvent } from '~/features/events/types';
 
 type EventStatus = 'BOOKED' | 'PENDING' | 'CANCELLED';
 
@@ -27,22 +28,33 @@ const blocks: { title: string; status: EventStatus }[] = [
 
 function EventBookings() {
   const dispatch = useAppDispatch();
-  const currentUserId = useAppSelector(
-    (state) => state.auth.currentUser?._id || state.auth.currentUser?.id
-  );
-  console.log("current user id is: ", currentUserId);
 
-  const rehydrated = useAppSelector((state: any) => state._persist?.rehydrated);
-  const { items: allEvents, loading, error } = useAppSelector(
-    (state) => state.events
-  );
+  const { currentUserId, currentUserEvents, loading, error } = useAppSelector((state) => ({
+    currentUserId: state.auth.currentUser?._id,
+    currentUserEvents: state.events.currentUserEvents,
+    loading: state.events.loading,
+    error: state.events.error,  
+}), shallowEqual);
+  // CheckPoint: DO NOT DELETE
+  console.log(` user: ${currentUserId}; loading: ${loading}`);
 
   useEffect(() => {
-    if (rehydrated && currentUserId) {
-      console.log("Dispatching fetchOrganizerEvents for", currentUserId);
-      dispatch(fetchAllEventsById(currentUserId));
+    if (!currentUserId || currentUserEvents.length !== 0 || loading) {
+      console.log("you reached here!")
+      return;
     }
-  }, [rehydrated, currentUserId, loading, dispatch]);
+      // CheckPoint: DO NOT DELETE
+      console.log("Dispatching fetchOrganizerEvents for", currentUserId);
+
+      const loadUsrEvents = async () => {
+        try {
+          await dispatch(fetchAllEventsById(currentUserId!));
+        } catch (err) {
+          console.log(`Failed to fetch user events ${err}`);
+        }
+      };
+      loadUsrEvents();
+    }, [currentUserId, currentUserEvents.length, loading, dispatch]);
 
   if (loading) {
     return (
@@ -60,13 +72,7 @@ function EventBookings() {
     );
   }
 
-  // Filter events that ONLY belong to this organizer
-  const userEvents = allEvents.filter(
-    (e: any) =>
-      (e as any).organizer_id?._id === currentUserId || e.organizer_id === currentUserId
-  );
-
-  if (userEvents.length === 0) {
+  if (currentUserEvents.length === 0) {
     return (
       <Typography variant="body2" color="text.secondary" textAlign="center">
         Your events history is empty.
@@ -77,7 +83,7 @@ function EventBookings() {
   return (
     <Box display="flex" flexDirection="column" gap={3}>
       {blocks.map(({ title, status }) => {
-        const events = userEvents.filter((e: TheEvent) => e.status === status);
+        const events = currentUserEvents.filter((event: UserEvent) => event.status === status);
 
         return (
           <Card key={status} variant="outlined" sx={{ borderRadius: 2 }}>
@@ -93,7 +99,7 @@ function EventBookings() {
               ) : (
                 <List disablePadding>
                   {events.map((event, idx) => (
-                    <React.Fragment key={event.id}>
+                    <React.Fragment key={event._id}>
                       <ListItem
                         secondaryAction={
                           <Stack direction="column" spacing={1}>

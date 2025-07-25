@@ -12,3 +12,15 @@ export default interface AuthState {
     loading: boolean;
     error: string | null;
 }
+
+export const initialAuthState: AuthState = {
+    pendingSignup: undefined,
+    pendingLogin: undefined,
+
+    currentUser: null,
+    jwtToken: null,
+    isAuthenticated: false,
+
+    loading: false,
+    error: null
+}

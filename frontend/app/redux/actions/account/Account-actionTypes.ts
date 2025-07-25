@@ -27,7 +27,7 @@ export interface UpdateAccountFailureAction extends Action<typeof AccountActionT
 }
 
 export interface DeleteAccountRequest extends Action<typeof AccountActionTypes.DELETE_ACCOUNT_REQUEST> {
-  payload: { id: string };
+  payload: { _id: string };
 }
 
 export interface DeleteAccountSuccess extends Action<typeof AccountActionTypes.DELETE_ACCOUNT_SUCCESS> {

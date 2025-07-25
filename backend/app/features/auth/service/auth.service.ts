@@ -21,7 +21,7 @@ export class AuthService {
         });
         const { _id, name, email, phone, role, status } = user.toObject() as LeanUser;
         const registered_User = { 
-                    id: _id.toString(), 
+                    _id: _id.toString(), 
                     name, 
                     email,
                     phone, 
@@ -54,7 +54,7 @@ export class AuthService {
 
         return {
             user: { 
-                id: _id.toString(), 
+                _id: _id.toString(), 
                 name, 
                 email, 
                 phone, 
@@ -97,7 +97,7 @@ export class AuthService {
         if (!parsedEnv.JWT_SECRET) throw new Error("Jwt tokwn is missing!");
         const payload = { sub: user._id, role: user.role, type: "access-jwt"};
         const token = jwt.sign(payload, parsedEnv.JWT_SECRET, { 
-            expiresIn: "5m",
+            expiresIn: "10m",
             issuer: "event-flow-server",
             audience: `event-flow-client-${user.name}`
         });

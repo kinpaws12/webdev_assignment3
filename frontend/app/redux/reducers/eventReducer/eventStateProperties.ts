@@ -1,8 +1,9 @@
-import type { Events, TheEvent } from "~/features/events/types";
+import type { Events, TheEvent, UserEvents } from "~/features/events/types";
 
 export interface EventState {
-  items: Events;
-  current: TheEvent | null;
+  events: Events;
+  selectedEvent: TheEvent | null;
+  currentUserEvents: UserEvents
   loading: boolean;
   updating: boolean;
   deleting: boolean;
@@ -10,8 +11,9 @@ export interface EventState {
 }
 
 export const initialEventState: EventState = {
-  items: [],
-  current: null,
+  events: [],
+  selectedEvent: null,
+  currentUserEvents: [],
   loading: false,
   updating: false,
   deleting: false,

@@ -12,7 +12,7 @@ export interface User extends Document {
 }
 export interface AuthticatedUser {
   user: {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     phone: string;

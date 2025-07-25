@@ -51,7 +51,10 @@ export const fetchAllEventsById = (usrId: string): ThunkAction<
                 type: EventActionTypes.FETCH_EVENTS_BY_ID_SUCCESS,
                 payload: usrEvents
             });
+
+            // CheckPoint: DO NOT DELETE
             console.log("User events are: ", usrEvents);
+
             return usrEvents;
         } catch (err: any) {
             dispatch({

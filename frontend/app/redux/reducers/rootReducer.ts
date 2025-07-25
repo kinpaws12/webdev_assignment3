@@ -31,7 +31,7 @@ const authPersistConfig = {
 const eventsPersistConfig = {
   key: 'events',
   storage,
-  whitelist: ['items', 'current'],
+  whitelist: ['events', 'selectedEvent', 'currentUserEvents'],
 }
 
 export const rootReducer = combineReducers({

@@ -5,8 +5,7 @@ export interface ProfileMainContentProps {
 }
 
 export interface User {
-  _id?: string,
-  id: string;
+  _id: string,
   name: string;
   email: string;
   phone?: string;
@@ -18,7 +17,7 @@ export interface User {
 }
 
 export interface UpdateAccountInfo {
-  id: string,
+  _id: string,
   updateFields: {
     name?: string;
     email?: string;
@@ -28,4 +27,4 @@ export interface UpdateAccountInfo {
 
 export type UpdateAccountSuccessPayload = Omit<User, 'createdAt'>;
 
-export type DeleteAccountSuccessPayload = Pick<User, 'id' | 'name' | 'role' | 'deleteAt'>
+export type DeleteAccountSuccessPayload = Pick<User, '_id' | 'name' | 'role' | 'deleteAt'>

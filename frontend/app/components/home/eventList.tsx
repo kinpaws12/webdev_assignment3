@@ -8,7 +8,7 @@ export const EventList = () => {
 
   // Select pieces of state
   const { 
-    items: events, 
+    events: events, 
     loading, 
     error 
   } = useAppSelector(

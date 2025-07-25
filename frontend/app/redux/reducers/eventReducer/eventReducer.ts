@@ -18,7 +18,7 @@ export default function eventReducer(
       return {
         ...state,
         loading: false,
-        items: action.payload,
+        events: action.payload,
         error: null,
       };
     case EventActionTypes.FETCH_EVENTS_FAILURE:
@@ -27,6 +27,27 @@ export default function eventReducer(
         loading: false, 
         error: action.payload.error 
     };
+
+    // Fetch All by User Id
+    case EventActionTypes.FETCH_EVENTS_BY_ID_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case EventActionTypes.FETCH_EVENTS_BY_ID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        currentUserEvents: action.payload,
+        error: null
+      };
+    case EventActionTypes.FETCH_EVENTS_BY_ID_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      };
 
     // Fetch one
     case EventActionTypes.FETCH_ONE_EVENT_REQUEST:
@@ -39,7 +60,7 @@ export default function eventReducer(
       return { 
         ...state, 
         loading: false, 
-        current: action.payload
+        selectedEvent: action.payload
     };
 
     case EventActionTypes.FETCH_ONE_EVENT_FAILURE:
@@ -61,8 +82,8 @@ export default function eventReducer(
       return {
         ...state,
         updating: false,
-        items: [...state.items, action.payload],
-        current: action.payload,
+        events: [...state.events, action.payload],
+        selectedEvent: action.payload,
       };
 
     case EventActionTypes.CREATE_EVENT_FAILURE:
@@ -84,13 +105,13 @@ export default function eventReducer(
       return {
         ...state,
         updating: false,
-        items: state.items.map((e) =>
-          e.id === action.payload.id ? action.payload : e
+        events: state.events.map((event) =>
+          event.id === action.payload.id ? action.payload : event
         ),
-        current:
-          state.current?.id === action.payload.id
+        selectedEvent:
+          state.selectedEvent?.id === action.payload.id
             ? action.payload
-            : state.current,
+            : state.selectedEvent,
       };
 
     case EventActionTypes.UPDATE_EVENT_FAILURE:
@@ -112,9 +133,9 @@ export default function eventReducer(
       return {
         ...state,
         deleting: false,
-        items: state.items.filter((e) => e.id !== action.payload.id),
-        current:
-          state.current?.id === action.payload.id ? null : state.current,
+        events: state.events.filter((e) => e.id !== action.payload.id),
+        selectedEvent:
+          state.selectedEvent?.id === action.payload.id ? null : state.selectedEvent,
       };
 
     case EventActionTypes.DELETE_EVENT_FAILURE:

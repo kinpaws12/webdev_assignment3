@@ -3,18 +3,7 @@ import type { AuthActions } from "../../actions/auth/Auth-actionTypes";
 import { AuthActionTypes } from "../../actions/auth/Auth-actionTypes";
 import type { AccountActions } from "~/redux/actions/account/Account-actionTypes";
 import { AccountActionTypes } from "~/redux/actions/account/Account-actionTypes";
-
-const initialAuthState: AuthState = {
-    pendingSignup: undefined,
-    pendingLogin: undefined,
-
-    currentUser: null,
-    jwtToken: null,
-    isAuthenticated: false,
-
-    loading: false,
-    error: null
-}
+import { initialAuthState } from "./authStateProperties";
 
 export default function authReducer(
     state = initialAuthState,
