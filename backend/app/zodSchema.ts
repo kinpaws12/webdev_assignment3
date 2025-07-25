@@ -17,3 +17,6 @@ export const signinSchema = z.object({
 })
 
 //Events
+export const createEventSchema = z.object({
+    
+})

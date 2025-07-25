@@ -3,7 +3,8 @@ import axios, { AxiosError, type AxiosRequestConfig } from "axios";
 import type { AxiosRequestHeaders } from "axios";
 import { parsedEnv } from "~/config/env";
 import { store } from "~/redux/store";
-import { refreshSuccess, logoutUser as logoutAction } from "~/redux/actions/auth/Auth-actionCreators";
+import { logoutUser as logoutAction } from "~/redux/actions/auth/Auth-actionCreators";
+import { refreshSuccess } from "~/redux/actions/auth/Auth-actionTypes";
 
 const getAccessToken = () => store.getState().auth.jwtToken;
 const setAccessToken = (token: string) => {

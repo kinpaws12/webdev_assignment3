@@ -15,7 +15,7 @@ export const authenticate: RequestHandler = (req, res, next) => {
       role: string 
     };
     req.user = { 
-      id: payload.sub, 
+      _id: payload.sub, 
       role: payload.role as any 
     };
     next();

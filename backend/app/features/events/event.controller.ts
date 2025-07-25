@@ -3,7 +3,7 @@ import createHttpError from "http-errors";
 import {EventModel} from "./models/event.model";    
 import type { LeanUser } from "../users/types/user.type";
 import { EventService } from "./event.service";
-import { CreateAndUpdateEventInput } from "./types/event.type";
+import { CreateEventInput, UpdateEventInput } from "./types/event.type";
 
 // GET http://localhost:5174/api/events
 export async function getAllEvents(
@@ -16,6 +16,23 @@ export async function getAllEvents(
     res.status(200).json(events);
   } catch (err) {
     next(createHttpError(500, "Failed to fetch events"));
+  }
+}
+
+// GET http://localhost:5174/api/events/user/:userId
+export async function getAllEventsByUserId(
+  _req: Request<{ userId: string}>,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const userEvents = await EventService.getAllByUsrId(_req.params.userId);
+    console.log(`User: ${_req.params.userId} has the following events: \n
+      ${userEvents}`);
+    res.status(200).json(userEvents);
+  } catch (err) {
+    console.log("Fetching events for", _req.params.userId);
+    next(createHttpError(500, "Failed to fetch events"))
   }
 }
 
@@ -50,23 +67,25 @@ export async function getEventById(
 
 // POST http://localhost:5174/api/events/categories/:category/:eventName
 export async function createEventByCategory(
-  req: Request<{ category: string; eventName: string }, unknown, Partial<CreateAndUpdateEventInput>>,
+  req: Request<
+    { category: string; eventName: string }, 
+    unknown,
+    CreateEventInput>,
   res: Response,
   next: NextFunction
 ) {
   try {
-    const userObj = req.user as Partial<LeanUser> & { id?: string };
-    const organizer = (userObj as any)._id ?? userObj.id;
-    const body = req.body as Partial<CreateAndUpdateEventInput>;
+    const organizer = (req.user as LeanUser)._id;
+    const body = req.body as CreateEventInput;
 
     if (!body.date) body.date = new Date();
 
-    const input: CreateAndUpdateEventInput = {
+    const input = {
       ...body,
       category: req.params.category,
       title: req.params.eventName,
-      organizer
-    } as CreateAndUpdateEventInput;
+      organizer_id: organizer
+    } as CreateEventInput;
 
     const newEvent = await EventService.createEvent(input);
     res.status(201).json(newEvent);
@@ -78,7 +97,7 @@ export async function createEventByCategory(
 
 // PUT http://localhost:5174/api/events/:id
 export async function updateEvent(
-  req: Request<{ id: string }>,
+  req: Request<{ id: string, updateFields: UpdateEventInput}>,
   res: Response,
   next: NextFunction
 ) {

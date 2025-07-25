@@ -11,10 +11,17 @@ import swaggerSpec from "./swagger";
 
 dotenv.config();
 const app = express();
+const allowedOrigins = parsedEnv.ALLOWED_ORIGINS;
+
+// Check the origin
+app.use((req, _res, next) => {
+  console.log("Incoming Origin:", req.get("Origin"));
+  next();
+});
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins,
     credentials: true
 }));
 app.use(express.json());
@@ -22,7 +29,13 @@ if (parsedEnv.NODE_ENV !== "test") {
   app.use(morgan("dev"));
 }
 
-app.use(cookieParser());   
+app.use(cookieParser());
+
+// Root health‑check
+app.get("/", (_req, res) => {
+  res.json(`Hi, this eventflow server API is running on port ${parsedEnv.PORT}`);
+});
+
 app.use("/api", apiRouter);
 
 // app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));

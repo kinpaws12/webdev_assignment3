@@ -13,13 +13,20 @@ export class AuthService {
 
         if (data.name?.trim() === '') delete (data as any).name;
         
-        const user = await UserModel.create({ ...data, password: hashPassword });
-        const { _id, name, email, role } = user.toObject() as LeanUser;
+        const user = await UserModel.create({ 
+            ...data, 
+            password: 
+            hashPassword, 
+            status: "Active" 
+        });
+        const { _id, name, email, phone, role, status } = user.toObject() as LeanUser;
         const registered_User = { 
-                    id: _id.toString(), 
+                    _id: _id.toString(), 
                     name, 
-                    email, 
-                    role 
+                    email,
+                    phone, 
+                    role,
+                    status 
                 }
         return registered_User;
     }
@@ -40,13 +47,21 @@ export class AuthService {
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) throw new Error("Invalid credentials");
 
-        const { _id, name, email: userEmail, role } = user;
+        const { _id, name, email: userEmail, phone, role, status, createdAt } = user;
 
         const accessToken = this.signToken(user); 
         const refreshToken = this.refreshToken(user);
 
         return {
-            user: { id: _id.toString(), name, email, role }, 
+            user: { 
+                _id: _id.toString(), 
+                name, 
+                email, 
+                phone, 
+                role, 
+                status, 
+                createdAt 
+            }, 
             token: accessToken,
             refreshToken
         };
@@ -82,7 +97,7 @@ export class AuthService {
         if (!parsedEnv.JWT_SECRET) throw new Error("Jwt tokwn is missing!");
         const payload = { sub: user._id, role: user.role, type: "access-jwt"};
         const token = jwt.sign(payload, parsedEnv.JWT_SECRET, { 
-            expiresIn: "5m",
+            expiresIn: "10m",
             issuer: "event-flow-server",
             audience: `event-flow-client-${user.name}`
         });
