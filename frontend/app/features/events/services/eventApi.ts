@@ -1,5 +1,5 @@
 import { api } from "~/api/central-axios";
-import type { CreateEventBody, DeletedEvent, Events, TheEvent, UpdateAnEvent, UpdatedEvent } from "../types";
+import type { CreateEventBody, DeletedEvent, Events, TheEvent, UpdateAnEvent, UpdatedEvent, UserEvents } from "../types";
 
 export async function fetchAllEvents(): Promise<Events> {
     try {
@@ -11,11 +11,17 @@ export async function fetchAllEvents(): Promise<Events> {
     }
 }
 
-// export async function fetchAllEventsByUsrId(): Promise<Events> {
-//     try {
-//         const { data } = await api.get<Events>("")
-//     }
-// } 
+export async function fetchAllEventsByUsrId(usrId: string): Promise<UserEvents> {
+    try {
+        const url = `/events/user/${usrId}`;
+        console.log("fetchAllEventsByUsrId -> ", url);
+        const { data } = await api.get<UserEvents>(`/events/user/${usrId}`);
+        return data;
+    } catch (err: any) {
+        const status = err.response?.status ?? "network";
+        throw new Error(`Fetch events failed (${status})`);
+    }
+} 
 
 export async function fetchEventById(id: string): Promise<TheEvent> {
     try{

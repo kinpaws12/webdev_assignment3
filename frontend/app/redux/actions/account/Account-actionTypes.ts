@@ -1,4 +1,5 @@
 import type { DeleteAccountSuccessPayload, UpdateAccountInfo, UpdateAccountSuccessPayload } from "~/features/users/types";
+import type { Action } from 'redux';
 
 export enum AccountActionTypes {
   // Update 
@@ -13,34 +14,28 @@ export enum AccountActionTypes {
 }
 
 // Action interfaces
-export interface UpdateAccountRequestAction {
-  type: typeof AccountActionTypes.UPDATE_ACCOUNT_REQUEST;
-  payload: UpdateAccountInfo,
+export interface UpdateAccountRequestAction extends Action<typeof AccountActionTypes.UPDATE_ACCOUNT_REQUEST> {
+  payload: UpdateAccountInfo;
 }
 
-export interface UpdateAccountSuccessAction {
-  type: typeof AccountActionTypes.UPDATE_ACCOUNT_SUCCESS;
-  payload: UpdateAccountSuccessPayload,
+export interface UpdateAccountSuccessAction extends Action<typeof AccountActionTypes.UPDATE_ACCOUNT_SUCCESS> {
+  payload: UpdateAccountSuccessPayload;
 }
 
-export interface UpdateAccountFailureAction {
-  type: typeof AccountActionTypes.UPDATE_ACCOUNT_FAILURE;
-  payload: {error: string};
+export interface UpdateAccountFailureAction extends Action<typeof AccountActionTypes.UPDATE_ACCOUNT_FAILURE> {
+  payload: { error: string };
 }
 
-export interface DeleteAccountRequest {
-  type: typeof AccountActionTypes.DELETE_ACCOUNT_REQUEST;
-  payload: {id: string};
+export interface DeleteAccountRequest extends Action<typeof AccountActionTypes.DELETE_ACCOUNT_REQUEST> {
+  payload: { id: string };
 }
 
-export interface DeleteAccountSuccess {
-  type: typeof AccountActionTypes.DELETE_ACCOUNT_SUCCESS;
-  payload: DeleteAccountSuccessPayload
+export interface DeleteAccountSuccess extends Action<typeof AccountActionTypes.DELETE_ACCOUNT_SUCCESS> {
+  payload: DeleteAccountSuccessPayload;
 }
 
-export interface DeleteAccountFailure {
-  type: typeof AccountActionTypes.DELETE_ACCOUNT_FAILURE;
-  payload: {error: string}
+export interface DeleteAccountFailure extends Action<typeof AccountActionTypes.DELETE_ACCOUNT_FAILURE> {
+  payload: { error: string };
 }
 
 export type AccountActions = 

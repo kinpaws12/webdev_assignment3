@@ -1,9 +1,10 @@
-import { EventActionTypes, type EventActions } from "~/redux/actions/events/actionTypes";
+import { EventActionTypes, type EventActions } from "~/redux/actions/events/Event-actionTypes";
 import { type EventState, initialEventState } from "./eventStateProperties";
+import { AuthActionTypes, type AuthActions } from "~/redux/actions/auth/Auth-actionTypes";
 
 export default function eventReducer(
   state = initialEventState,
-  action: EventActions
+  action: EventActions | AuthActions
 ): EventState {
     switch (action.type) {
     // Fetch All
@@ -122,8 +123,9 @@ export default function eventReducer(
         deleting: false, 
         error: action.payload.error 
     };
-
-    /* ───────── DEFAULT ───────── */
+    case AuthActionTypes.LOGIN_SUCCESS:
+    case AuthActionTypes.LOGOUT:
+      return { ...initialEventState };
     default:
       return state;
     }

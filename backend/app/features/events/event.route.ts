@@ -13,8 +13,8 @@ publicEventRouter.get("/", eventController.getAllEvents);
 publicEventRouter.get("/categories/:categoryName", eventController.getEventsByCategory);
 
 // private
+privateEventRouter.get("/user/:userId", eventController.getAllEventsByUserId);
 privateEventRouter.get("/:id", eventController.getEventById);
-privateEventRouter.get("/:id", eventController.getAllEventsByUserId);
 
 // Organizer
 const organizerEventRouter = Router();
@@ -32,4 +32,4 @@ adminEventRouter.use(authenticate, authorize(...ADMIN_ROLE));
 
 adminEventRouter.patch("/:id/audit", eventController.auditEvent);
 
-export { publicEventRouter, organizerEventRouter, adminEventRouter };
+export { publicEventRouter, privateEventRouter, organizerEventRouter, adminEventRouter };

@@ -1,15 +1,23 @@
 import {EventModel} from "./models/event.model";
-import { UpdateQuery } from "mongoose";
-import { CreateAndUpdateEventInput, LeanEvent } from "./types/event.type";
+import { Types, UpdateQuery } from "mongoose";
+import { CreateEventInput, UpdateEventInput, LeanEvent } from "./types/event.type";
 
 export class EventService {
   // public
   static async getAll() {
-    return await EventModel.find().sort({ createdAt: -1 }).exec();
+    const events = await EventModel.find().sort({ createdAt: -1 }).exec();
+    console.log(`Loaded Events: ${events}`)
+    return events;
   }
 
-  static async getAllByUsrId(usrId: string) {
-    return await EventModel.findById({ usrId }).exec();
+  static async getAllByUsrId(userId: string) {
+    const usrEvents = await EventModel.find({ 
+      organizer_id: new Types.ObjectId(userId)
+      })
+      .populate("organizer_id", "name")
+      .lean()
+      .exec();
+    return usrEvents
   }
 
   static async getByCategory(category: string) {
@@ -21,11 +29,11 @@ export class EventService {
   }
 
   // organizer
-  static async createEvent(data: CreateAndUpdateEventInput): Promise<LeanEvent> {
-    const { title, category, date, location, costs } = data;
-    if (!title || !category || !date || !location || !costs) {
+  static async createEvent(data: CreateEventInput): Promise<LeanEvent> {
+    const { title, category, description, date, location, capacity, costs } = data;
+    if (!title || !category || !description || !date || !location || !capacity || !costs) {
       throw new Error(
-        "Missing required fields: title, category, date, location, and costs are mandatory."
+        "Missing required fields: title, category, description, date, location, capacity, and costs are mandatory."
       );
     }
     const created = await EventModel.create(data);
@@ -34,7 +42,7 @@ export class EventService {
 
   static async updateEvent(
     id: string,
-    patch: UpdateQuery<CreateAndUpdateEventInput>
+    patch: UpdateQuery<UpdateEventInput>
   ): Promise<LeanEvent | null> {
     return EventModel.findByIdAndUpdate(id, patch, {
         new: true,

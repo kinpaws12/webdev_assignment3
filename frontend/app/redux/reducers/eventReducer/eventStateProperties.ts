@@ -1,4 +1,4 @@
-import type { Events, TheEvent, UpdatedEvent } from "~/features/events/types";
+import type { Events, TheEvent } from "~/features/events/types";
 
 export interface EventState {
   items: Events;
@@ -15,5 +15,5 @@ export const initialEventState: EventState = {
   loading: false,
   updating: false,
   deleting: false,
-  error: null,
+  error: null
 };

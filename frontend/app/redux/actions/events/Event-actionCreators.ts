@@ -1,6 +1,14 @@
-import { EventActionTypes, type EventActions } from "./actionTypes";
+import { EventActionTypes, type EventActions } from "./Event-actionTypes";
 import type { ThunkAction } from 'redux-thunk';
-import type { CreateEventBody, DeletedEvent, Events, TheEvent, UpdateAnEvent, UpdatedEvent } from "~/features/events/types";
+import type { 
+    CreateEventBody, 
+    DeletedEvent, 
+    Events, 
+    TheEvent, 
+    UpdateAnEvent, 
+    UpdatedEvent, 
+    UserEvents
+} from "~/features/events/types";
 import { type AppState } from "~/redux/store";
 import * as eventApi from "~/features/events/services/eventApi";
 
@@ -29,20 +37,32 @@ export const fetchAllEvents = (): ThunkAction<
     }
 }
 
-// export const fetchAllEventsById = (usrId: string): ThunkAction<
-//     Promise<Events>, AppState, unknown, EventActions
-// > => {
-//     return async (dispatch) => {
-//         dispatch({
-//             type: EventActionTypes.FETCH_EVENTS_BY_ID_REQUEST,
-//             payload: { id: usrId }
-//         })
-//         try {
-//             const usrEvents = await eventApi
-//         }
-//     }
+export const fetchAllEventsById = (usrId: string): ThunkAction<
+    Promise<UserEvents>, AppState, unknown, EventActions
+> => {
+    return async (dispatch) => {
+        dispatch({
+            type: EventActionTypes.FETCH_EVENTS_BY_ID_REQUEST,
+            payload: { id: usrId }
+        })
+        try {
+            const usrEvents = await eventApi.fetchAllEventsByUsrId(usrId);
+            dispatch({
+                type: EventActionTypes.FETCH_EVENTS_BY_ID_SUCCESS,
+                payload: usrEvents
+            });
+            console.log("User events are: ", usrEvents);
+            return usrEvents;
+        } catch (err: any) {
+            dispatch({
+                type: EventActionTypes.FETCH_EVENTS_BY_ID_FAILURE,
+                payload: {error: err.message || "Fetch event failed."}
+            })
+            throw err;
+        }
+    }
 
-// }
+}
 
 export const fetchEvent = (id: string): ThunkAction<
     Promise<TheEvent>, AppState, unknown, EventActions

@@ -16,6 +16,21 @@ export interface TheEvent {
   updatedAt: Date
 }
 
+/** Organizer object as returned by the populated query */
+export interface OrganizerLite {
+  _id: string;
+  name: string;
+}
+
+export interface UserEvent extends Omit<TheEvent, "id" | "organizer"> {
+  _id: string;
+  organizer_id: OrganizerLite;
+  __v?: number;
+}
+
+export type UserEvents = UserEvent[];
+
+
 // All events
 export type Events = TheEvent[];
 

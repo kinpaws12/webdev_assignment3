@@ -1,5 +1,5 @@
 import type AuthState from "./authStateProperties";
-import type { AuthActions } from "../../actions/auth/Auth-actionCreators";
+import type { AuthActions } from "../../actions/auth/Auth-actionTypes";
 import { AuthActionTypes } from "../../actions/auth/Auth-actionTypes";
 import type { AccountActions } from "~/redux/actions/account/Account-actionTypes";
 import { AccountActionTypes } from "~/redux/actions/account/Account-actionTypes";

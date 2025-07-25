@@ -3,6 +3,11 @@ import { Event } from '../types/event.type';
 
 const EventSchema = new Schema<Event>(
   {
+    organizer_id: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'User', 
+      required: true 
+    },
     title: { 
       type: String, 
       required: true 
@@ -40,14 +45,10 @@ const EventSchema = new Schema<Event>(
       type: String, 
       enum: ['PENDING','APPROVED','REJECTED'], 
       default: 'PENDING' 
-    },
-    organizer: { 
-      type: Schema.Types.ObjectId, 
-      ref: 'User', 
-      required: true 
     }
   },
   { timestamps: true }
 );
 
+EventSchema.index({ organizer_id: 1 });
 export const EventModel = model<Event>('Event', EventSchema);

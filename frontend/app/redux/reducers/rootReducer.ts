@@ -28,9 +28,15 @@ const authPersistConfig = {
   whitelist: ['jwtToken', 'isAuthenticated', 'currentUser'],
 };
 
+const eventsPersistConfig = {
+  key: 'events',
+  storage,
+  whitelist: ['items', 'current'],
+}
+
 export const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
-  events: eventReducer,
+  events: persistReducer(eventsPersistConfig, eventReducer),
   account: accountReducer
   // other reducers
 });

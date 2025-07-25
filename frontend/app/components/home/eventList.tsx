@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { EventCard } from './eventCard';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
-import { fetchAllEvents } from '~/redux/actions/events/actionCreators';
+import { fetchAllEvents } from '~/redux/actions/events/Event-actionCreators';
 
 export const EventList = () => {
   const dispatch = useAppDispatch();
