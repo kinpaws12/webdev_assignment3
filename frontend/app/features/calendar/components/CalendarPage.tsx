@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import type { TheEvent } from '../../events/types';
-import { CalendarService } from '../services/calendarService';
+import { fetchAllEvents } from '../services/calendarService'; 
+import { useNavigate } from 'react-router-dom';
 
 interface RootState {
   events: {
@@ -20,13 +21,14 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [localEvents, setLocalEvents] = useState<TheEvent[]>([]);
   const [localLoading, setLocalLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Load events on component mount
   useEffect(() => {
     const loadEvents = async () => {
       try {
         setLocalLoading(true);
-        const eventsData = await CalendarService.getEvents();
+        const eventsData = await fetchAllEvents();
         setLocalEvents(eventsData);
       } catch (err) {
         console.error('Failed to load events:', err);
@@ -288,7 +290,10 @@ export default function CalendarPage() {
                           </span>
                         </div>
                       </div>
-                      <button className="flex-shrink-0 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700">
+                      <button
+       onClick={() => navigate(`/event-details?eventId=${event._id}`)}
+  className="flex-shrink-0 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700"
+      >
                         View Details
                       </button>
                     </div>
