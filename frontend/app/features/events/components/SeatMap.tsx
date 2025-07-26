@@ -1,4 +1,6 @@
-
+import { useSelector } from 'react-redux';
+import type { AppState } from '../../../redux/store';
+import { toast } from 'react-toastify';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -25,13 +27,20 @@ const seatStatusColors = {
 export default function SeatMap() {
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state: AppState) => state.auth.isAuthenticated);
 
   const toggleSeat = (seatId: string, isVIP: boolean) => {
-    if (bookedSeats.includes(seatId)) return;
-    setSelectedSeats(prev =>
-      prev.includes(seatId)
-        ? prev.filter(s => s !== seatId)
-        : [...prev, seatId]
+    if (!isAuthenticated) {
+    toast.info("You need to log in to select a seat."); 
+    return;
+  }
+
+  if (bookedSeats.includes(seatId)) return;
+
+  setSelectedSeats(prev =>
+    prev.includes(seatId)
+      ? prev.filter(s => s !== seatId)
+      : [...prev, seatId]
     );
   };
 
