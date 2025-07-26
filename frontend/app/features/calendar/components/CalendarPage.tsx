@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import type { TheEvent } from '../../events/types';
-import { fetchAllEvents } from '../services/calendarService'; 
+import { fetchAllEvents } from '../../events/services/eventApi';
 import { useNavigate } from 'react-router-dom';
 
 interface RootState {
@@ -291,9 +291,12 @@ export default function CalendarPage() {
                         </div>
                       </div>
                       <button
-       onClick={() => navigate(`/event-details?eventId=${event._id}`)}
-  className="flex-shrink-0 px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700"
-      >
+onClick={() => {
+  localStorage.setItem('selectedEventId', event._id as string);
+  navigate('/event-details');
+}}
+
+>
                         View Details
                       </button>
                     </div>
