@@ -1,0 +1,51 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1753654071222,482, Login,200,OK,Light Load 1-1,text,true,,1237,316,1,2,http://localhost:5174/api/auth/sign-in,482,0,2
+1753654072217,9,Get user account,200,OK,Light Load 1-1,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,9,0,0
+1753654072732,14,Update user details,200,OK,Light Load 1-1,text,true,,514,706,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,14,0,0
+1753654073247,21,Get events list,200,OK,Light Load 1-1,text,true,,3390,496,1,4,http://localhost:5174/api/events,21,0,0
+1753654073769,4,Entry point,200,OK,Light Load 1-1,text,true,,177856,517,2,5,http://localhost:3000/assets/entry.client--AejsyGg.js,4,0,1
+1753654074218,241, Login,200,OK,Light Load 1-2,text,true,,1237,316,1,4,http://localhost:5174/api/auth/sign-in,241,0,1
+1753654074963,111,Get user account,200,OK,Light Load 1-2,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,111,0,0
+1753654075575,17,Update user details,200,OK,Light Load 1-2,text,true,,514,706,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,17,0,0
+1753654076100,134,Get events list,200,OK,Light Load 1-2,text,true,,3390,496,1,3,http://localhost:5174/api/events,134,0,0
+1753654076736,3,Entry point,200,OK,Light Load 1-2,text,true,,177856,517,2,5,http://localhost:3000/assets/entry.client--AejsyGg.js,3,0,1
+1753654077204,347, Login,200,OK,Light Load 1-3,text,true,,1237,316,1,3,http://localhost:5174/api/auth/sign-in,347,0,1
+1753654078059,7,Get user account,200,OK,Light Load 1-3,text,true,,514,520,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,7,0,0
+1753654078572,107,Update user details,200,OK,Light Load 1-3,text,true,,514,706,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,107,0,0
+1753654079194,3,Get events list,200,OK,Light Load 1-3,text,true,,3390,496,1,4,http://localhost:5174/api/events,3,0,0
+1753654079698,2,Entry point,200,OK,Light Load 1-3,text,true,,177856,517,1,4,http://localhost:3000/assets/entry.client--AejsyGg.js,2,0,1
+1753654080215,232, Login,200,OK,Light Load 1-4,text,true,,1237,316,1,4,http://localhost:5174/api/auth/sign-in,232,0,1
+1753654080955,115,Get user account,200,OK,Light Load 1-4,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,115,0,0
+1753654081571,15,Update user details,200,OK,Light Load 1-4,text,true,,514,706,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,15,0,0
+1753654082102,132,Get events list,200,OK,Light Load 1-4,text,true,,3390,496,1,3,http://localhost:5174/api/events,132,0,0
+1753654082736,3,Entry point,200,OK,Light Load 1-4,text,true,,177856,517,2,5,http://localhost:3000/assets/entry.client--AejsyGg.js,2,0,1
+1753654083218,438, Login,200,OK,Light Load 1-5,text,true,,1237,316,1,3,http://localhost:5174/api/auth/sign-in,438,0,1
+1753654084167,10,Get user account,200,OK,Light Load 1-5,text,true,,514,520,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,10,0,0
+1753654084680,8,Update user details,200,OK,Light Load 1-5,text,true,,514,706,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,8,0,0
+1753654085195,5,Get events list,200,OK,Light Load 1-5,text,true,,3390,496,1,4,http://localhost:5174/api/events,5,0,0
+1753654085701,2,Entry point,200,OK,Light Load 1-5,text,true,,177856,517,1,4,http://localhost:3000/assets/entry.client--AejsyGg.js,2,0,1
+1753654086211,246, Login,200,OK,Light Load 1-6,text,true,,1237,316,1,4,http://localhost:5174/api/auth/sign-in,246,0,1
+1753654086972,83,Get user account,200,OK,Light Load 1-6,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,83,0,0
+1753654087557,15,Update user details,200,OK,Light Load 1-6,text,true,,514,706,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,15,0,0
+1753654088075,148,Get events list,200,OK,Light Load 1-6,text,true,,3390,496,1,3,http://localhost:5174/api/events,148,0,0
+1753654088723,4,Entry point,200,OK,Light Load 1-6,text,true,,177856,517,2,5,http://localhost:3000/assets/entry.client--AejsyGg.js,3,0,1
+1753654089206,358, Login,200,OK,Light Load 1-7,text,true,,1237,316,1,3,http://localhost:5174/api/auth/sign-in,358,0,1
+1753654090070,6,Get user account,200,OK,Light Load 1-7,text,true,,514,520,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,6,0,0
+1753654090583,77,Update user details,200,OK,Light Load 1-7,text,true,,514,706,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,77,0,0
+1753654091173,5,Get events list,200,OK,Light Load 1-7,text,true,,3390,496,1,4,http://localhost:5174/api/events,5,0,0
+1753654091679,5,Entry point,200,OK,Light Load 1-7,text,true,,177856,517,1,4,http://localhost:3000/assets/entry.client--AejsyGg.js,5,0,1
+1753654092218,251, Login,200,OK,Light Load 1-8,text,true,,1237,316,1,4,http://localhost:5174/api/auth/sign-in,251,0,1
+1753654092981,76,Get user account,200,OK,Light Load 1-8,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,76,0,0
+1753654093557,9,Update user details,200,OK,Light Load 1-8,text,true,,514,706,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,9,0,0
+1753654094081,147,Get events list,200,OK,Light Load 1-8,text,true,,3390,496,1,3,http://localhost:5174/api/events,147,0,0
+1753654094731,5,Entry point,200,OK,Light Load 1-8,text,true,,177856,517,2,5,http://localhost:3000/assets/entry.client--AejsyGg.js,4,0,1
+1753654095207,343, Login,200,OK,Light Load 1-9,text,true,,1237,316,1,3,http://localhost:5174/api/auth/sign-in,343,0,2
+1753654096055,4,Get user account,200,OK,Light Load 1-9,text,true,,514,520,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,4,0,0
+1753654096572,76,Update user details,200,OK,Light Load 1-9,text,true,,514,706,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,76,0,0
+1753654097162,5,Get events list,200,OK,Light Load 1-9,text,true,,3390,496,1,4,http://localhost:5174/api/events,5,0,0
+1753654097667,3,Entry point,200,OK,Light Load 1-9,text,true,,177856,517,1,4,http://localhost:3000/assets/entry.client--AejsyGg.js,2,0,1
+1753654098218,248, Login,200,OK,Light Load 1-10,text,true,,1237,316,1,4,http://localhost:5174/api/auth/sign-in,248,0,2
+1753654098974,84,Get user account,200,OK,Light Load 1-10,text,true,,514,520,1,3,http://localhost:5174/api/users/68852ba262f999891b17774f,84,0,0
+1753654099558,11,Update user details,200,OK,Light Load 1-10,text,true,,514,706,1,4,http://localhost:5174/api/users/68852ba262f999891b17774f,11,0,0
+1753654100078,151,Get events list,200,OK,Light Load 1-10,text,true,,3390,496,1,3,http://localhost:5174/api/events,150,0,0
+1753654100730,12,Entry point,200,OK,Light Load 1-10,text,true,,177856,517,1,4,http://localhost:3000/assets/entry.client--AejsyGg.js,10,0,2
